@@ -1,0 +1,21 @@
+/* this is a component based css, so that you dont made a huge file css. separated it by component duh. */
+
+/* this style class/id wont clash with others component css as it get randomized by next js. */
+
+.error {
+    color: white;
+    background-color: red;
+}
+
+.green {
+    color: #fff;
+    background-color: green;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+}
+
+.green:hover {
+    background-color: #fff;
+    color: green;
+}

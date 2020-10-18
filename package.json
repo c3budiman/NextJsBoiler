@@ -1,0 +1,32 @@
+{
+  "name": "nextjsboiler",
+  "version": "1.0.0",
+  "description": "Next JS Boiler For next Project",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "bootstrap": "^4.5.3",
+    "express": "^4.17.1",
+    "next": "^9.5.5",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
+    "reactstrap": "^8.6.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/c3budiman/NextJsBoiler.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/c3budiman/NextJsBoiler/issues"
+  },
+  "homepage": "https://github.com/c3budiman/NextJsBoiler#readme"
+}
