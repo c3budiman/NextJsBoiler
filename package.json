@@ -4,17 +4,26 @@
   "description": "Next JS Boiler For next Project",
   "main": "index.js",
   "dependencies": {
+    "@testing-library/dom": "^7.26.0",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "babel-jest": "^26.5.2",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.5.3",
     "express": "^4.17.1",
+    "jest": "^26.5.3",
+    "jest-canvas-mock": "^2.3.0",
+    "jest-dom": "^4.0.0",
     "next": "^9.5.5",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "reactstrap": "^8.6.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "jest-css-modules": "^2.1.0"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "dev": "next dev",
     "build": "next build",
     "start": "next start"
