@@ -9,11 +9,12 @@ What It Contains?
 - custom app.js
 - custom css (both global, and modular)
 - environment variables
-- module testing, for Test-driven development
+- UI testing (React and css)
+- unit test for api routes (/api)
 
 What my next goal for this boiler template?
 - integrating to database (mongo/mysql/firebase)
 - integrating to session (redis)
 - integrating to elk (elastic search, logstash, kibana) for maintenance and logging
-- integrating unit test for api
 - adding example of crud data.
+- adding example of ssg and ssr.
