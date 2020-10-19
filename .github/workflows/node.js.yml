@@ -26,7 +26,7 @@ jobs:
     - run: npm run test
       
     env:
-      DB_HOST: c4budiman.com
+      DB_HOST: 134.209.109.215
       DB_USER: c3budiman
       DB_PASS: c3543211
       DB_DATABASE: testing
