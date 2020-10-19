@@ -26,7 +26,7 @@ jobs:
     - run: npm run test
       
     env:
-      DB_HOST: ${{ secrets.DB_ENDPOINT }}
-      DB_USER: ${{ secrets.DB_USER }}
-      DB_PASS: ${{ secrets.DB_PASS }}
-      DB_DATABASE: ${{ secrets.DB_DATABASE }}
+      DB_HOST: c4budiman.com
+      DB_USER: c3budiman
+      DB_PASS: c3543211
+      DB_DATABASE: testing
