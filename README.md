@@ -11,9 +11,10 @@ What It Contains?
 - environment variables
 - UI testing (React and css)
 - unit test for api routes (/api)
+- Mysql Integration
 
 What my next goal for this boiler template?
-- integrating to database (mongo/mysql/firebase)
+- integrating to database (mongo/firebase)
 - integrating to session (redis)
 - integrating to elk (elastic search, logstash, kibana) for maintenance and logging
 - adding example of crud data.
