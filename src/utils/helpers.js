@@ -23,3 +23,34 @@ export function rejectNull(str, label, res, message) {
         }
     }
 }
+
+export function isJson(item) {
+    if (typeof (item) != "undefined") {
+        item = typeof item !== "string"
+            ? JSON.stringify(item)
+            : item;
+
+        try {
+            item = JSON.parse(item);
+        } catch (e) {
+            return false;
+        }
+
+        if (typeof item === "object" && item !== null) {
+            return true;
+        }
+
+        return false
+    } else {
+        return false;
+    }
+}
+
+export function funcDateNowMili() {
+    var d = new Date();
+    let dateNow = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds() + ":" + d.getMilliseconds();
+    return dateNow;
+}
+
+
+

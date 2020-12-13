@@ -11,9 +11,12 @@ const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
 
+
+//express custom server
+//well you need pm2 or something if you want to develop with express cause it wont hot reload itself.
 app.prepare().then(() => {
     const server = express()
-    
+
     require('./backend/home')(server);
 
     server.all('*', (req, res) => {

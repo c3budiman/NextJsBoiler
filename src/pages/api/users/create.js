@@ -31,7 +31,7 @@ export default async function createUserHandler(req, res) {
 
         var insert = await mysqlQuery(sql, param)
         if (insert.code == 0) {
-            return res.status(200).json({ code: 0, info: 'Insert is done', data: insert })
+            return res.status(200).json({ code: 0, info: 'Users Created', data: insert })
         } else {
             return res.status(200).json(insert)
         }
