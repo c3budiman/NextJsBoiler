@@ -11,12 +11,13 @@ What It Contains?
 - environment variables
 - UI testing (React and css)
 - unit test for api routes (/api)
+- Mongoose and Mongodb Integration (i prefer mongoose, but you can use mongodb too.)
 - Mysql Integration
 - integrating to session (redis)
 - integrating to elastic-search for maintenance and logging api activity and response time (custom-server-node)
 - integrating linter
 
 What my next goal for this boiler template?
-- integrating to database (mongo/firebase)
-- adding example of crud data.
+- integrating firebase
+- adding example of crud data in frontend.
 - adding example of ssg and ssr.

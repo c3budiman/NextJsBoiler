@@ -46,3 +46,5 @@ jobs:
       REDIS_PORT: ${{ secrets.REDIS_PORT }}
       REDIS_IP: ${{ secrets.REDIS_IP }}
       REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+      MONGODB_URI: ${{ secrets.MONGODB_URI }}
+      MONGODB_DB: ${{ secrets.MONGODB_DB }}
