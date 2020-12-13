@@ -38,7 +38,7 @@
     "jest-css-modules": "^2.1.0"
   },
   "scripts": {
-    "test": "jest",
+    "test": "jest --forceExit",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
