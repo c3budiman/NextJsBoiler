@@ -3,7 +3,7 @@
 const { createServer } = require('http')
 const { parse } = require('url')
 const next = require('next')
-const { url } = require('inspector')
+// const { url } = require('inspector')
 
 const dev = false
 const app = next({ dev })

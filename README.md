@@ -14,6 +14,7 @@ What It Contains?
 - Mysql Integration
 - integrating to session (redis)
 - integrating to elastic-search for maintenance and logging api activity and response time (custom-server-node)
+- integrating linter
 
 What my next goal for this boiler template?
 - integrating to database (mongo/firebase)

@@ -53,7 +53,7 @@ export function setSession(req, res, input_session, key_session = "c3budima-sess
 
             // input the session to redis
             return resolve(new Promise(function (resolve_save) {
-                client.setex(random, parseInt((+new Date) / 1000) + 86400, input_session, function (err, reply) {
+                client.setex(random, parseInt((+new Date) / 1000) + 86400, input_session, function (err) {
                     if (err == null) {
                         client.quit()
                         resolve_save({ code: "0", info: "SETEX SUCCEED", data: {} })
@@ -105,6 +105,7 @@ export function delSession(req) {
 
         // client.auth(process.env.IP_REDIS.auth);
         client.on("error", function (error) {
+            console.log(error)
             resolve({ code: "-1", info: "REDIS Connection Error." })
         });
 
@@ -117,7 +118,7 @@ export function delSession(req) {
                         }
                         else {
                             var dewa = JSON.parse(replies)
-                            resolve_del({ code: "0", info: "Deleted Succesfully" })
+                            resolve_del({ code: "0", info: "Deleted Succesfully", data: dewa })
                             client.quit()
                         }
                     }
@@ -131,22 +132,22 @@ export function delSession(req) {
 }
 
 
-const buildCookies = (key, val, rememberLogin) => {
-    var now = new Date();
-    var time = now.getTime();
-    // 1 day expires cookie
-    time += ((3600 * 1000) * 24);
-    now.setTime(time);
+// const buildCookies = (key, val, rememberLogin) => {
+//     var now = new Date();
+//     var time = now.getTime();
+//     // 1 day expires cookie
+//     time += ((3600 * 1000) * 24);
+//     now.setTime(time);
 
-    let data = key + "=" + val + ";";
-    let expires = "expires=" + now.toUTCString() + ";";
-    let path = "path=/" + ";";
-    let httpOnly = "httpOnly" + ";";
-    let SameSite = "SameSite=Strict" + ";";
+//     let data = key + "=" + val + ";";
+//     let expires = "expires=" + now.toUTCString() + ";";
+//     let path = "path=/" + ";";
+//     let httpOnly = "httpOnly" + ";";
+//     let SameSite = "SameSite=Strict" + ";";
 
 
-    return data + expires + path + httpOnly + SameSite
-}
+//     return data + expires + path + httpOnly + SameSite
+// }
 
 
 const buildCookiesWithJWT = (key, val, rememberLogin) => {

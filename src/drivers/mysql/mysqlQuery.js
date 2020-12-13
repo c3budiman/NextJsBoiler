@@ -19,7 +19,7 @@ export function mysqlQuery(query, param) {
                 var inserts = param
                 sql = mysql.format(sql, inserts)
 
-                con.query(sql, function (err, result, fields) {
+                con.query(sql, function (err, result) {
                     if (err) {
                         resolve({ code: 500, info: "MYSQL Connection Error QUERY", data: { err } })
                         con.end();
