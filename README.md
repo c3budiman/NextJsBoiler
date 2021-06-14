@@ -23,6 +23,8 @@ What It Contains?
 - adding example of ssg, ssr, spa with redux.
 
 What my next goal for this boiler template?
+- websocket
+- notification example / chat example
 - integrating firebase
 - adding example of crud data in frontend.
 
