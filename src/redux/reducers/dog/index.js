@@ -15,4 +15,4 @@ export default function dogReducer (state = defaultState, action) {
   
       default: return state;
     }
-};
+}

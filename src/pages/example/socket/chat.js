@@ -1,22 +1,20 @@
 
-import React, { 
-	useEffect,
-    useState
+import React, {
+    // useEffect,
+    // useState
 } from 'react';
-import Skeleton from 'react-loading-skeleton'
+// import Skeleton from 'react-loading-skeleton'
 import styles from './chat.module.css'
 
 
 export default function SSR() {
-	useEffect(() => {
+    // useEffect(() => {
 
-	}, []);
+    // }, []);
 
-
-
-	return <>
-		<title>Realtime Example</title>
-		<center>
+    return <>
+        <title>Realtime Example</title>
+        <center>
             <div className={styles.chatBorder}>
                 <h1 className={styles.titleChat}>
                     RealTime Chat
@@ -24,7 +22,7 @@ export default function SSR() {
             </div>
 
             <div className={styles.chatScreen}>
-                
+
             </div>
             <div className={styles.chatInput}>
                 <div className="form-group">
@@ -42,8 +40,8 @@ export default function SSR() {
                     </button>
                 </div>
             </div>
-			
 
-		</center>
-	</>
+
+        </center>
+    </>
 }
