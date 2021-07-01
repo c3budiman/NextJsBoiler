@@ -9,11 +9,13 @@ export default async function createUserHandler(req, res) {
         (
             username,
             password,
+            role,
             bio,
             images
         )
         VALUES
         (
+            ?,
             ?, 
             ?, 
             ?, 
@@ -25,6 +27,7 @@ export default async function createUserHandler(req, res) {
         var param = [
             rejectNull(body.username, 'username', res),
             md5(rejectNull(body.password, 'password', res)),
+            rejectNull(body.role, 'role', res),
             emptyToString(body.bio),
             emptyToString(body.images)
         ]
