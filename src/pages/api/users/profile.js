@@ -2,7 +2,8 @@ import { mysqlQuery } from '../../../drivers/mysql/mysqlQuery'
 import { rejectNull, getSessionFromHeader } from '../../../utils/helpers'
 
 export default async function userProfile(req, res) {
-    var sql = `select id, username, role, bio, images from users where id=?`;
+    var sql = `select users.id as userid, username, role, roles.name as rolename, bio, images 
+                from users join roles on users.role=roles.id where users.id=?`;
     try {
         let sessionUser = await getSessionFromHeader(req);
         if (sessionUser.code == 0) {
@@ -12,9 +13,10 @@ export default async function userProfile(req, res) {
             var users = await mysqlQuery(sql, param)
             if (users.code == 0) {
                 let session = {
-                    id: users.data[0].id,
+                    id: users.data[0].userid,
                     username: users.data[0].username,
                     role: users.data[0].role,
+                    rolename: users.data[0].rolename,
                     bio: users.data[0].bio,
                     images: users.data[0].images
                 }
@@ -42,7 +44,4 @@ export default async function userProfile(req, res) {
             error: error
         })
     }
-
-
-
 }
