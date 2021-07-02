@@ -26,6 +26,7 @@ What It Contains?
 - integrating to elastic-search for maintenance and logging api activity and response time (custom-server-node)
 - integrating linter
 - adding example of ssg, ssr, spa with redux.
+- Amazon AWS S3 integration and examples
 
 What my next goal for this boiler template?
 
@@ -42,3 +43,14 @@ How to use?
 4. start dev using npm run dev
 5. start build using npm run build
 6. ship it on custom server or vercel or whatever it supports both serverless and custom server.
+
+Aws S3 instruction :
+
+1. Create a new [IAM role](https://aws.amazon.com/iam/) with permission for `AWSCloudFormationFullAccess` and `AmazonS3FullAccess`.
+1. Save the access key and secret key.
+1. Install the [AWS CLI](https://aws.amazon.com/cli/) and run `aws configure`.
+1. This will prompt you to enter the access key and secret key.
+1. Run `npm run cdk deploy` to create an S3 bucket with the correct CORS settings.
+1. Visit your newly created S3 bucket and retrieve the name and region.
+1. Add the name and region to `.env`.
+1. done, you can customize the example in /api/s3. or the frontend in /s3/example

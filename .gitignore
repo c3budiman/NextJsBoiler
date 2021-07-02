@@ -1,4 +1,7 @@
-.next
-node_modules
-.env.local
 .env
+node_modules
+.cdk.staging
+cdk.out
+.next
+.env.local
+.DS_Store
