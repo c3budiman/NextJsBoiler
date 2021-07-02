@@ -29,7 +29,7 @@ export default async function userSignIn(req, res) {
                 images: users.data[0].images
             }
 
-            let session_result = await setSession(req, res, JSON.stringify(session), process.env.APPNAME)
+            let session_result = await setSession(req, res, JSON.stringify(session), process.env.APPNAME, false)
 
             if (session_result.code == 0) {
                 return res.status(200).json({ code: 0, info: 'Login Suceed', data: session, token: session_result })

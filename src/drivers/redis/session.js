@@ -9,68 +9,81 @@ import jwt from 'jsonwebtoken';
 var client = null
 
 //this function made cookies, in browser
-//and also store it on redis.
-export function setSession(req, res, input_session, key_session = "c3budima-session") {
+//also store it on redis if useRedis = true;
+export function setSession(req, res, input_session, key_session = "c3budima-session", useRedis = false) {
     let random = Md5((Math.random() * 99999) + (Math.random() * 99999) + (Math.random() * 99999) + funcDateNowMili() + (Math.random() * 99999) + (Math.random() * 99999) + (Math.random() * 99999)).toString()
-
-    return new Promise(function (resolve) {
-
+    if (!useRedis) {
         if (!isJson(input_session)) {
-            resolve({ code: "101", info: "Please Use JSON for Input Format.", data: {} })
+            return { code: "101", info: "Please Use JSON for Input Format.", data: {} }
         }
-
-        //make redis retry on fail :
-        client = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_IP, {
-            retry_strategy: function (options) {
-                if (options.error && options.error.code === "ECONNREFUSED") {
-                    //port is not open bro!
-                    return new Error("The server refused the connection");
-                }
-                if (options.total_retry_time > 1000 * 60 * 60) {
-                    return new Error("Retry time exhausted");
-                }
-                if (options.attempt > 10) {
-                    return undefined;
-                }
-                return Math.min(options.attempt * 100, 3000);
-            },
-        });
-
-        client.auth(process.env.REDIS_PASSWORD);
-
-        client.on("error", function (error) {
-            client.quit()
-            console.log(error)
-            resolve({ code: "-1", info: "REDIS Connection Error." })
-        });
-
-        client.on("ready", function () {
-            // RANDOM KEY-NYA
-            let cookies_data = buildCookiesWithJWT(key_session, input_session, true);
-            res.setHeader("Set-Cookie", cookies_data.cookies)
-
-            // input the session to redis
-            return resolve(new Promise(function (resolve_save) {
-                client.setex(random, parseInt((+new Date) / 1000) + 86400, input_session, function (err) {
-                    if (err == null) {
-                        client.quit()
-                        resolve_save({ code: "0", info: "SETEX SUCCEED", token: cookies_data.token })
+        let cookies_data = buildCookiesWithJWT(key_session, input_session, true);
+        res.setHeader("Set-Cookie", cookies_data.cookies)
+        return {
+            code: "0",
+            info: "Set Session Berhasil",
+            token: cookies_data.token
+        }
+    } else {
+        // bebas sih mau pake redis apa engga.
+        //kan dah ada jwt harusnya ga perlu lagi =.=
+        //tapi klo emg disuruh pake server kek org bego sih silahkan pake fungsi bego ini :
+        return new Promise(function (resolve) {
+            if (!isJson(input_session)) {
+                resolve({ code: "101", info: "Please Use JSON for Input Format.", data: {} })
+            }
+            //make redis retry on fail :
+            client = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_IP, {
+                retry_strategy: function (options) {
+                    if (options.error && options.error.code === "ECONNREFUSED") {
+                        //port is not open bro!
+                        return new Error("The server refused the connection");
                     }
-                    else {
-                        client.quit()
-                        resolve_save({ code: "-1", info: "Redis Connection Error SETEX" })
-                        let error = JSON.stringify({
-                            code: 3,
-                            info: "Cant Setex, Redis",
-                            data: err
-                        })
-                        console.log(error)
-                        throw new Error(error);
+                    if (options.total_retry_time > 1000 * 60 * 60) {
+                        return new Error("Retry time exhausted");
                     }
-                });
-            }))
-        });
-    })
+                    if (options.attempt > 10) {
+                        return undefined;
+                    }
+                    return Math.min(options.attempt * 100, 3000);
+                },
+            });
+
+            client.auth(process.env.REDIS_PASSWORD);
+
+            client.on("error", function (error) {
+                client.quit()
+                console.log(error)
+                resolve({ code: "-1", info: "REDIS Connection Error." })
+            });
+
+            client.on("ready", function () {
+                // RANDOM KEY-NYA
+                let cookies_data = buildCookiesWithJWT(key_session, input_session, true);
+                res.setHeader("Set-Cookie", cookies_data.cookies)
+
+                // input the session to redis
+                return resolve(new Promise(function (resolve_save) {
+                    client.setex(random, parseInt((+new Date) / 1000) + 86400, input_session, function (err) {
+                        if (err == null) {
+                            client.quit()
+                            resolve_save({ code: "0", info: "SETEX SUCCEED", token: cookies_data.token })
+                        }
+                        else {
+                            client.quit()
+                            resolve_save({ code: "-1", info: "Redis Connection Error SETEX" })
+                            let error = JSON.stringify({
+                                code: 3,
+                                info: "Cant Setex, Redis",
+                                data: err
+                            })
+                            console.log(error)
+                            throw new Error(error);
+                        }
+                    });
+                }))
+            });
+        })
+    }
 }
 
 export function delSession(req) {
@@ -159,7 +172,7 @@ const buildCookiesWithJWT = (key, val, rememberLogin) => {
     }
 
     now.setTime(time);
-    var token = jwt.sign({ sess: val }, process.env.APPKEY);
+    var token = jwt.sign({ sess: val }, process.env.APPKEY, {expiresIn : "1 days"});
 
     let data = key + "=" + token + ";";
     let expires = "expires=" + now.toUTCString() + ";";
