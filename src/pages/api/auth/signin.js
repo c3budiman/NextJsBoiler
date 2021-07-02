@@ -10,7 +10,7 @@ import { setSession } from "../../../drivers/redis/session"
 export default async function userSignIn(req, res) {
     let body = req.body
 
-    var sql = `select id, username, bio, images from users where username=? and password=?`;
+    var sql = `select id, role, username, bio, images from users where username=? and password=?`;
 
     try {
         var param = [
@@ -23,6 +23,7 @@ export default async function userSignIn(req, res) {
         if (users.code == 0) {
             let session = {
                 id: users.data[0].id,
+                role: users.data[0].role,
                 username: users.data[0].username,
                 bio: users.data[0].bio,
                 images: users.data[0].images
