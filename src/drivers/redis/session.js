@@ -46,17 +46,15 @@ export function setSession(req, res, input_session, key_session = "c3budima-sess
 
         client.on("ready", function () {
             // RANDOM KEY-NYA
-            let cookies_data = [
-                buildCookiesWithJWT(key_session, input_session, true)
-            ];
-            res.setHeader("Set-Cookie", cookies_data)
+            let cookies_data = buildCookiesWithJWT(key_session, input_session, true);
+            res.setHeader("Set-Cookie", cookies_data.cookies)
 
             // input the session to redis
             return resolve(new Promise(function (resolve_save) {
                 client.setex(random, parseInt((+new Date) / 1000) + 86400, input_session, function (err) {
                     if (err == null) {
                         client.quit()
-                        resolve_save({ code: "0", info: "SETEX SUCCEED", data: {} })
+                        resolve_save({ code: "0", info: "SETEX SUCCEED", token: cookies_data.token })
                     }
                     else {
                         client.quit()
@@ -169,10 +167,13 @@ const buildCookiesWithJWT = (key, val, rememberLogin) => {
     let httpOnly = "httpOnly" + ";";
     let SameSite = "SameSite=Strict" + ";";
 
-    return data + expires + path + httpOnly + SameSite
+    return {
+        "token": token,
+        "cookies": data + expires + path + httpOnly + SameSite
+    }
 }
 
-const getCookie = (key, req) => {
+export const getCookie = (key, req) => {
     return process.browser
         ? getCookieFromBrowser(key)
         : getCookieFromServer(key, req);

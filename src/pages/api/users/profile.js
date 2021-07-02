@@ -1,29 +1,38 @@
 import { mysqlQuery } from '../../../drivers/mysql/mysqlQuery'
-import { rejectNull } from '../../../utils/helpers'
+import { rejectNull, getSessionFromHeader } from '../../../utils/helpers'
 
 export default async function userProfile(req, res) {
-    let body = req.body
-
-    var sql = `select id, username, role, bio, images from users where username=?`;
-
+    var sql = `select id, username, role, bio, images from users where id=?`;
     try {
-        var param = [
-            rejectNull(body.username, 'username', res),
-        ]
-
-        var users = await mysqlQuery(sql, param)
-        if (users.code == 0) {
-            let session = {
-                id: users.data[0].id,
-                username: users.data[0].username,
-                role: users.data[0].role,
-                bio: users.data[0].bio,
-                images: users.data[0].images
+        let sessionUser = await getSessionFromHeader(req);
+        if (sessionUser.code == 0) {
+            var param = [
+                rejectNull(sessionUser.data?.id, 'id', res),
+            ]
+            var users = await mysqlQuery(sql, param)
+            if (users.code == 0) {
+                let session = {
+                    id: users.data[0].id,
+                    username: users.data[0].username,
+                    role: users.data[0].role,
+                    bio: users.data[0].bio,
+                    images: users.data[0].images
+                }
+                return res.status(200).json(
+                    {
+                        code: 0,
+                        info: 'berhasil ambil data',
+                        data: session
+                    }
+                )
+            } else {
+                return res.status(200).json(users)
             }
-
-            return res.status(200).json(session)
         } else {
-            return res.status(200).json(users)
+            return res.status(200).json({
+                code: sessionUser.code,
+                info: sessionUser.info,
+            })
         }
     } catch (error) {
         console.log(error)

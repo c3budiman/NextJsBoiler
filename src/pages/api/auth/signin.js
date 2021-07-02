@@ -31,7 +31,7 @@ export default async function userSignIn(req, res) {
             let session_result = await setSession(req, res, JSON.stringify(session), process.env.APPNAME)
 
             if (session_result.code == 0) {
-                return res.status(200).json({ code: 0, info: 'Login Suceed', data: session })
+                return res.status(200).json({ code: 0, info: 'Login Suceed', data: session, token: session_result })
             } else {
                 return res.status(200).json(session_result)
             }
