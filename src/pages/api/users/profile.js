@@ -11,6 +11,7 @@ export default async function userProfile(req, res) {
                 rejectNull(sessionUser.data?.id, 'id', res),
             ]
             var users = await mysqlQuery(sql, param)
+            console.log(users);
             if (users.code == 0) {
                 let session = {
                     id: users.data[0].userid,

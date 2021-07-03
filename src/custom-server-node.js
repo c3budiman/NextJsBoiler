@@ -28,12 +28,16 @@ app.prepare().then(() => {
                         captureBody: 'all'
                     })
                 }
+                // if you want record api only :
+                // if (req.url.substring(0, 4) == "/api") {
+                //     console.log(req.method + " " + req.url)
+                //     agent.setTransactionName(req.method + " " + req.url)
+                // }
 
-                if (req.url.substring(0, 4) == "/api") {
-                    console.log(req.method + " " + req.url)
+                // get rid of next route :
+                if(req.url.substring(0,6) != "/_next") {
                     agent.setTransactionName(req.method + " " + req.url)
                 }
-
             } catch (error) {
                 console.log(error)
             }

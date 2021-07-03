@@ -1,28 +1,18 @@
-export function mysqlQuery(query, param) {
+var mysql = require('mysql');
 
-    var mysql = require('mysql');
-
-    return new Promise(function (resolve) {
-        var con = mysql.createConnection({
-            host: process.env.DB_HOST,
-            user: process.env.DB_USER,
-            password: process.env.DB_PASS,
-            database: process.env.DB_DATABASE
-        });
-
-        con.connect(function (err) {
-            if (err) {
-                resolve({ code: 500, info: "MYSQL Connection Error.", data: { err } })
-            }
-            else {
+export async function mysqlQuery(query, param) {
+    function doQuery(con, query, param) {
+        return new Promise(function (resolve) {
+            try {
+                console.log(con.state)
                 var sql = query
                 var inserts = param
                 sql = mysql.format(sql, inserts)
 
                 con.query(sql, function (err, result) {
                     if (err) {
-                        resolve({ code: 500, info: "MYSQL Connection Error QUERY", data: { err } })
                         con.end();
+                        resolve({ code: 500, info: "MYSQL Connection Error QUERY", data: { err } })
                     }
                     else {
                         if (sql.substring(0, 6).toUpperCase() == "INSERT") {
@@ -40,12 +30,40 @@ export function mysqlQuery(query, param) {
                                 resolve({ code: 404, info: "data not found", data: result })
                             }
                         }
-                        con.end();
                     }
                 });
+            } catch (error) {
+                console.log(error);
+                return { code: 500, info: "MYSQL Connection Error", data: { error } }
             }
         });
-    })
+    }
 
+    try {
+        return new Promise(function (resolve) {
+            let cached = global.mysql
+            if (!cached) cached = global.mysql = {}
 
+            var con;
+            if (cached.conmysql && cached.conmysql.state == "authenticated") {
+                console.log('already have mysql client');
+                con = cached.conmysql
+                resolve(doQuery(con, query, param));
+            } else {
+                console.log('creating mysql client');
+                var client = mysql.createConnection({
+                    host: process.env.DB_HOST,
+                    user: process.env.DB_USER,
+                    password: process.env.DB_PASS,
+                    database: process.env.DB_DATABASE
+                });
+
+                cached.conmysql = client;
+                resolve(doQuery(client, query, param));
+            }
+        })
+    } catch (error) {
+        console.log(error);
+        return { code: 500, info: "MYSQL Connection Error", data: { error } }
+    }
 }
