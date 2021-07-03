@@ -58,7 +58,8 @@
     "cdk": "cdk",
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start-old": "next start",
+    "start": "NODE_ENV=production node src/custom-server-node.js",
     "start-with-express": "NODE_ENV=production node src/custom-server-express.js",
     "start-with-node": "NODE_ENV=production node src/custom-server-node.js",
     "lint:scripts": "eslint --fix --ext .js --ignore-path .gitignore ."
