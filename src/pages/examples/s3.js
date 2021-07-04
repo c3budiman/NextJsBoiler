@@ -1,8 +1,9 @@
 import React, {
     useState
 } from 'react';
+import ExampleLayout from '../../components/Layout/ExampleLayout'
 
-export default function Upload() {
+export default function S3Upload() {
     const [imageupload, setImage] = useState('');
     const uploadPhoto = async (e) => {
         const file = e.target.files[0];
@@ -33,16 +34,19 @@ export default function Upload() {
 
     return (
         <>
-            <p>Upload a .png or .jpg image (max 1MB).</p>
-            <input
-                onChange={uploadPhoto}
-                type="file"
-                accept="image/png, image/jpeg"
-            />
-            {
-                imageupload != '' ? <img height='400px' alt='upload img' src={imageupload} /> : null
-            }
-
+            <ExampleLayout title="S3 Upload">
+                <div style={{ margin: "0px 20px" }}>
+                    <p>Upload a .png or .jpg image (max 1MB).</p>
+                    <input
+                        onChange={uploadPhoto}
+                        type="file"
+                        accept="image/png, image/jpeg"
+                    />
+                    {
+                        imageupload != '' ? <img height='400px' alt='upload img' src={imageupload} /> : null
+                    }
+                </div>
+            </ExampleLayout>
         </>
     );
 }

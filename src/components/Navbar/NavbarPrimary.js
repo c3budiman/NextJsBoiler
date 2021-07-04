@@ -33,16 +33,16 @@ const NavbarPrimary = (props) => {
 
     return (
         <div>
-            <Navbar id="navbarCflix" className={yScrollPosition < 10 ? "bg-transparent" : "bg-black"} fixed="top" dark expand="md">
+            <Navbar id="navbarCflix" className={yScrollPosition < 10 && !props.noTransparent ? "bg-transparent" : "bg-black"} fixed="top" dark expand="md">
                 <NavbarBrand style={{ marginLeft: 40 }} href="/">NextJS Boiler</NavbarBrand>
                 <NavbarToggler onClick={toggle} />
                 <Collapse style={{ margin: "0px 40px" }} className="menu-navigation" isOpen={isOpen} navbar>
                     <Nav className="mr-auto" navbar>
                         <NavItem>
-                            <NavLink className={props.activeMenu === "beranda" ? "active" : ""} href="/">Home</NavLink>
+                            <NavLink className={props.activeMenu === "home" ? "active" : ""} href="/">Home</NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink className={props.activeMenu === "tv" ? "active" : ""} href="/example">Examples</NavLink>
+                            <NavLink className={props.activeMenu === "examples" ? "active" : ""} href="/examples">Examples</NavLink>
                         </NavItem>
                     </Nav>
                 </Collapse>

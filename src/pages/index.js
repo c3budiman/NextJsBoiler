@@ -9,7 +9,7 @@ export default function Index({ isConnected, mysqlCon, hostMongo, hostMysql }) {
     return (
         <>
             <title>NextJS Simple Boiler Template</title>
-            <NavbarPrimary activeMenu="beranda" />
+            <NavbarPrimary activeMenu="home" />
             {/* <div style={{ height: "50px" }}></div> */}
             <div className="my-pictures">
                 <Image src="/images/next.jpeg" width="1440" height="800" alt="Profile Picture" />
