@@ -1,36 +1,78 @@
-import GreenButton from '../components/button/GreenButton'
 import Image from 'next/image'
 import { connectToDatabase } from '../drivers/mongo/connectToDatabase'
+import { mysqlQuery } from '../drivers/mysql/mysqlQuery'
+import dynamic from 'next/dynamic'
+// const GreenButton = dynamic(() => import('../components/button/GreenButton'))
+const NavbarPrimary = dynamic(() => import('../components/Navbar/NavbarPrimary'))
 
-export default function Index({ isConnected }) {
+export default function Index({ isConnected, mysqlCon, hostMongo, hostMysql }) {
     return (
         <>
             <title>NextJS Simple Boiler Template</title>
-            <header>
-                <div className="header-c3budiman">
-                    <div className="inside header">
-                        <h3>Welcome!</h3>
-                        <div className="my-pictures">
-                            <Image src="https://avatars1.githubusercontent.com/u/1578830" width="400" height="400" alt="Profile Picture" />
+            <NavbarPrimary activeMenu="beranda" />
+            {/* <div style={{ height: "50px" }}></div> */}
+            <div className="my-pictures">
+                <Image src="/images/next.jpeg" width="1440" height="800" alt="Profile Picture" />
+            </div>
+            <div className="intro-section">
+                <div className="inside header">
+                    <div className="row">
+                        <div className="col-3 col-lg-1">
+                            <Image className='ppgw' src="/images/cecep.jpg" width="100" height="100" alt="Profile Picture" />
                         </div>
-                        <GreenButton text="Learn More?" type="button" onClick={() => alert('wow you clicked it!')} />
+                        <div className="col-9 col-lg-6 my-auto">
+                            <h5>Welcome to next.js boiler example!</h5>
+                        </div>
+                        <div className="col-12 col-lg-5">
+                            <h5>
+                                Service Available :
+                            </h5>
+
+                            <ul>
+                                {isConnected ? (
+                                    <li>MongoDB is Up at : {hostMongo}</li>
+                                ) : null}
+
+                                {mysqlCon ? (
+                                    <li>Mysql is Up at : {hostMysql}</li>
+                                ) : null}
+                            </ul>
+                        </div>
                     </div>
-                    {isConnected ? (
-                        <h2 className="subtitle">You are connected to MongoDB</h2>
-                    ) : null}
+                    <br />
                 </div>
 
-            </header>
+
+
+                <br />
+                {/* <GreenButton text="Our Repo" type="button" onClick={() => alert('wow you clicked it!')} /> */}
+            </div>
         </>
     )
 }
 
 export async function getServerSideProps() {
-    const { client } = await connectToDatabase()
+    //checking mysql connection :
+    var mysqlCon = false;
+    let cached = global.mysql
+    if (!cached) cached = global.mysql = {}
+    if (cached.conmysql && cached.conmysql.state == "authenticated") {
+        mysqlCon = true;
+    } else {
+        var sql = `select id from users limit 1`;
+        var users = await mysqlQuery(sql);
+        if (users.code == 0) {
+            mysqlCon = true;
+        }
+    }
 
-    const isConnected = await client.isConnected() // Returns true or false
+    //checking mongo connection :
+    const { client } = await connectToDatabase()
+    const isConnected = await client.isConnected()
+    const hostMysql = "XXXX" + process.env.DB_HOST.substring(37)
+    const hostMongo = "XXXX" + process.env.MONGODB_URI.substring(31)
 
     return {
-        props: { isConnected },
+        props: { isConnected, mysqlCon, hostMysql, hostMongo },
     }
 }
