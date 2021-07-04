@@ -69,10 +69,10 @@ export async function getSessionFromHeader(req) {
         if (token.length > 7) {
             // console.log(token.substring(7))
             let bearer = token;
-            if(getTokenFromHeader) {
+            if (getTokenFromHeader) {
                 bearer = token.substring(7);
             }
-            
+
             try {
                 let verifiedjwt = await jwt.verify(bearer, process.env.APPKEY);
                 return {
@@ -80,25 +80,28 @@ export async function getSessionFromHeader(req) {
                     'info': 'ok',
                     'data': {
                         'id': JSON.parse(verifiedjwt.sess).id,
-                        'username': JSON.parse(verifiedjwt.sess).username
+                        'username': JSON.parse(verifiedjwt.sess).username,
+                        'role': JSON.parse(verifiedjwt.sess).role,
+                        'bio': JSON.parse(verifiedjwt.sess).bio,
+                        'images': JSON.parse(verifiedjwt.sess).images
                     }
                 };
             } catch (error) {
                 return {
                     'code': 1,
-                    'info': 'error parsing jwt',
+                    'info': 'Please log in to get access.',
                 };
             }
         } else {
             return {
                 'code': 2,
-                'info': 'error jwt < 7',
+                'info': 'Please log in to get access.',
             };
         }
     } else {
         return {
             'code': 3,
-            'info': 'error no jwt',
+            'info': 'Please log in to get access.',
         };
     }
 }

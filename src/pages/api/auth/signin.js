@@ -1,13 +1,10 @@
 import { mysqlQuery } from '../../../drivers/mysql/mysqlQuery'
 import { rejectNull } from '../../../utils/helpers'
-
 import { setSession } from "../../../drivers/redis/session"
 
 //this example we integrate sign in with redis, and cookies
-
 //well we can do a sign in with jwt too, if we want it.
-
-export default async function userSignIn(req, res) {
+async function userSignIn(req, res) {
     let body = req.body
 
     var sql = `select id, role, username, bio, images from users where username=? and password=?`;
@@ -47,7 +44,6 @@ export default async function userSignIn(req, res) {
             error: error
         })
     }
-
-
-
 }
+
+export default userSignIn;

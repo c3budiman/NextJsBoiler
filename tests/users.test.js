@@ -7,7 +7,7 @@ describe('/api/users/*', () => {
         const { req, res } = createMocks({
             method: 'POST',
             body: {
-                username: 'c3budiman9999',
+                username: 'c3budiman123123',
                 password: 'wowimpassword123',
                 role: 1,
                 bio: '',
@@ -29,7 +29,7 @@ describe('/api/users/*', () => {
         const { req, res } = createMocks({
             method: 'POST',
             body: {
-                username: 'c3budiman9999'
+                username: 'c3budiman123123'
             },
         });
 

@@ -27,6 +27,7 @@ What It Contains?
 - integrating linter
 - adding example of ssg, ssr, spa with redux.
 - Amazon AWS S3 integration and examples
+- API Midleware Example
 
 What my next goal for this boiler template?
 
