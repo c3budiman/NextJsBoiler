@@ -56,55 +56,69 @@ export function funcDateNowMili() {
 }
 
 export async function getSessionFromHeader(req) {
-    let token = req.headers?.authorization ?? "";
-    let getTokenFromHeader = true;
+    try {
+        let token = req.headers?.authorization ?? "";
+        let getTokenFromHeader = true;
 
-    let tokenfromcookie = getCookie(process.env.APPNAME, req)
-    if (token == "") {
-        token = tokenfromcookie;
-        getTokenFromHeader = false;
-    }
+        let tokenfromcookie = getCookie(process.env.APPNAME, req)
+        if (token == "") {
+            token = tokenfromcookie;
+            getTokenFromHeader = false;
+        }
 
-    if (token != "") {
-        if (token.length > 7) {
-            // console.log(token.substring(7))
-            let bearer = token;
-            if (getTokenFromHeader) {
-                bearer = token.substring(7);
-            }
+        if (token != "") {
+            if (token.length > 7) {
+                // console.log(token.substring(7))
+                let bearer = token;
+                if (getTokenFromHeader) {
+                    bearer = token.substring(7);
+                }
 
-            try {
-                let verifiedjwt = await jwt.verify(bearer, process.env.APPKEY);
+                try {
+                    let verifiedjwt = await jwt.verify(bearer, process.env.APPKEY);
+                    return {
+                        'code': 0,
+                        'info': 'ok',
+                        'data': {
+                            'id': JSON.parse(verifiedjwt.sess).id,
+                            'username': JSON.parse(verifiedjwt.sess).username,
+                            'role': JSON.parse(verifiedjwt.sess).role,
+                            'bio': JSON.parse(verifiedjwt.sess).bio,
+                            'images': JSON.parse(verifiedjwt.sess).images
+                        }
+                    };
+                } catch (error) {
+                    return {
+                        'code': 1,
+                        'info': 'Please log in to get access.',
+                    };
+                }
+            } else {
                 return {
-                    'code': 0,
-                    'info': 'ok',
-                    'data': {
-                        'id': JSON.parse(verifiedjwt.sess).id,
-                        'username': JSON.parse(verifiedjwt.sess).username,
-                        'role': JSON.parse(verifiedjwt.sess).role,
-                        'bio': JSON.parse(verifiedjwt.sess).bio,
-                        'images': JSON.parse(verifiedjwt.sess).images
-                    }
-                };
-            } catch (error) {
-                return {
-                    'code': 1,
+                    'code': 2,
                     'info': 'Please log in to get access.',
                 };
             }
         } else {
             return {
-                'code': 2,
+                'code': 3,
                 'info': 'Please log in to get access.',
             };
         }
-    } else {
+    } catch (error) {
+        console.log(error)
         return {
-            'code': 3,
+            'code': 4,
             'info': 'Please log in to get access.',
         };
     }
+
 }
 
+export function getCookieFromBrowser(name) {
+    var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    if (match) return match[2];
+    return null;
+}
 
 

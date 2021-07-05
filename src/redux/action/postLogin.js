@@ -9,7 +9,7 @@ export const postLogin = (username, password) => ({
             body: JSON.stringify({
                 "username": username,
                 "password": password,
-            }) // body data type must match "Content-Type" header
+            })
         })
         .then(response => response.json()),
 });

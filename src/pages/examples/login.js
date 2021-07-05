@@ -1,32 +1,49 @@
-import { initializeStore } from '../../redux/store'
-import { postLogin } from '../../redux/action/postLogin'
-import { useSelector, shallowEqual } from 'react-redux'
-import React, {
-    useState
-} from 'react';
-// import Skeleton from 'react-loading-skeleton'
-import ExampleLayout from '../../components/Layout/ExampleLayout'
+import ExampleLayout from '../../components/Layout/ExampleLayout';
+const GreenButton = dynamic(() => import('../../components/button/GreenButton'))
+import { getProfile } from '../../redux/action/users/getProfile';
+import { postLogin } from '../../redux/action/postLogin';
+import { useSelector, shallowEqual } from 'react-redux';
+import { initializeStore } from '../../redux/store';
 import HashLoader from "react-spinners/HashLoader";
-import md5 from 'md5'
-
-
+import dynamic from 'next/dynamic'
+import Image from 'next/image';
+import React, {
+    useState,
+    useEffect
+} from 'react';
+import md5 from 'md5';
 
 export default function Login() {
-    const stateLogin = ['noauth', 'auth'];
-    const [stateUser, setStateUser] = useState(stateLogin[0]);
+    const stateLogin = ['noauth', 'loading', 'auth', 'error'];
     const [username, setusername] = useState()
     const [password, setpassword] = useState()
+
+    useEffect(() => {
+        getProfileUseEffect()
+
+        async function getProfileUseEffect() {
+            const reduxStore = initializeStore()
+            const { dispatch } = reduxStore
+            await dispatch(getProfile())
+        }
+    }, []);
 
     let Users = useSelector(
         (state) => ({
             data: state.userReducer.data,
-            isPending: state.userReducer.isPending
+            isPending: state.userReducer.isPending,
+            userState: state.userReducer.state,
         }),
         shallowEqual
     )
 
     async function doLogin() {
-        setStateUser(stateLogin[1])
+        const reduxStore = initializeStore()
+        const { dispatch } = reduxStore
+        await dispatch(postLogin(username, md5(password)))
+    }
+
+    async function doLogout() {
         const reduxStore = initializeStore()
         const { dispatch } = reduxStore
         await dispatch(postLogin(username, md5(password)))
@@ -35,7 +52,7 @@ export default function Login() {
     return <>
         <ExampleLayout title="Login">
             {
-                (stateUser == stateLogin[0]) || (!Users.isPending && Users.data.code != 0) ?
+                (Users.userState == stateLogin[0] || Users.userState == stateLogin[3]) ?
                     <div className="container">
                         <form>
                             <div className="form-group">
@@ -70,7 +87,7 @@ export default function Login() {
                                 className="btn btn-primary">Submit</button>
                         </form>
                     </div>
-                    : stateUser == stateLogin[1] && Users.isPending ?
+                    : Users.userState == stateLogin[1] ?
                         <div style={{ marginTop: "100px" }}>
                             <center>
                                 <HashLoader color={"#000"} loading={true} size={150} />
@@ -82,10 +99,61 @@ export default function Login() {
                                 <h5>Loading..</h5>
                             </center>
                         </div>
-                        :
-                        <>
-                            <p>Nothing to show yet..</p>
-                        </>
+                        : Users.userState == stateLogin[2] ?
+                            <>
+                                <div className="container">
+                                    <div className="row">
+                                        <div className="col-lg-3">
+                                            <Image className='ppgw' src={Users.data.data.images} width="200" height="auto" alt="Profile Picture" />
+                                        </div>
+                                        <div className="col-lg-6 my-auto">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        Username
+                                                    </td>
+                                                    <td>
+                                                        &nbsp;:&nbsp;
+                                                    </td>
+                                                    <td>
+                                                        {Users.data.data.username}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Role
+                                                    </td>
+                                                    <td>
+                                                        &nbsp;:&nbsp;
+                                                    </td>
+                                                    <td>
+                                                        {Users.data.data.role == 1 ? "Admin" : "Users"}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Bio
+                                                    </td>
+                                                    <td>
+                                                        &nbsp;:&nbsp;
+                                                    </td>
+                                                    <td>
+                                                        {Users.data.data.bio}
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+                                        </div>
+                                        <div className="col-lg-3">
+                                            <GreenButton text="Logout" type="button" onClick={doLogout} />
+                                        </div>
+                                    </div>
+                                </div>
+                            </>
+                            :
+                            <>
+                                <p>Unknown Error</p>
+                            </>
             }
         </ExampleLayout>
     </>
