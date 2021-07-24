@@ -1,10 +1,14 @@
 import dynamic from 'next/dynamic'
 const NavbarPrimary = dynamic(() => import('../../components/Navbar/NavbarPrimary'))
+import Head from 'next/head'
+
 
 export default function Examples() {
     return (
         <>
-            <title>Examples | NextJS Simple Boiler Template</title>
+            <Head>
+                <title>Examples | NextJS Simple Boiler Template</title>
+            </Head>
             <NavbarPrimary activeMenu="examples" noTransparent={true} />
             <div style={{ height: "100px" }}></div>
             <div className='max1444'>

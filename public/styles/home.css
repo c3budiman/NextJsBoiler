@@ -5,7 +5,8 @@
 }
 
 .ppgw {
-    border-radius: 50%;
+    border-radius: 30px;
+    box-shadow: rgba(0, 0, 0, 0.8) 0 0 30px;
 }
 
 .header-c3budiman {
@@ -128,4 +129,23 @@
 
 .whiteColor {
     color: #fff;
+}
+
+.cursor {
+    cursor: pointer;
+}
+
+.profile-img-detail span {
+    position: absolute;
+    background: #141414;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    right: 30%;
+    bottom: 10px;
+    padding: 4px;
+}
+
+.profile-img-detail span img {
+    width: 100%;
 }

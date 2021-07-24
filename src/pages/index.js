@@ -4,13 +4,18 @@ import { mysqlQuery } from '../drivers/mysql/mysqlQuery'
 import dynamic from 'next/dynamic'
 // const GreenButton = dynamic(() => import('../components/button/GreenButton'))
 const NavbarPrimary = dynamic(() => import('../components/Navbar/NavbarPrimary'))
+import Head from 'next/head'
+
 
 export default function Index({ isConnected, mysqlCon, hostMongo, hostMysql }) {
     return (
         <>
-            <title>NextJS Simple Boiler Template</title>
+            <Head>
+                <title>NextJS Simple Boiler Template</title>
+            </Head>
+
             <NavbarPrimary activeMenu="home" />
-            {/* <div style={{ height: "50px" }}></div> */}
+
             <div className='max1444'>
                 <div className="my-pictures">
                     <Image src="/images/next.jpeg" width="1440" height="800" alt="Profile Picture" />
@@ -42,7 +47,6 @@ export default function Index({ isConnected, mysqlCon, hostMongo, hostMysql }) {
                         </div>
                         <br />
                     </div>
-
                     <br />
                 </div>
             </div>
