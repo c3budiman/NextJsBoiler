@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+# Beep beep boop boop
+# here is your flag : 
+# c3b_{hahaha_emangnya_ctf_apa_lu_gada_kerjaan_mau_hackhack}
