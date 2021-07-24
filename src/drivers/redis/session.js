@@ -5,12 +5,14 @@ import Md5 from 'md5'
 import redis from 'redis';
 
 import jwt from 'jsonwebtoken';
+global.crypto = require('crypto')
+
 
 var client = null
 
 //this function made cookies, in browser
 //also store it on redis if useRedis = true;
-export function setSession(req, res, input_session, key_session = "c3budima-session", useRedis = false) {
+export function setSession(req, res, input_session, key_session = "c3budiman-session", useRedis = false) {
     let random = Md5((Math.random() * 99999) + (Math.random() * 99999) + (Math.random() * 99999) + funcDateNowMili() + (Math.random() * 99999) + (Math.random() * 99999) + (Math.random() * 99999)).toString()
     if (!useRedis) {
         if (!isJson(input_session)) {
@@ -142,48 +144,50 @@ export function delSession(req) {
     })
 }
 
-
-// const buildCookies = (key, val, rememberLogin) => {
-//     var now = new Date();
-//     var time = now.getTime();
-//     // 1 day expires cookie
-//     time += ((3600 * 1000) * 24);
-//     now.setTime(time);
-
-//     let data = key + "=" + val + ";";
-//     let expires = "expires=" + now.toUTCString() + ";";
-//     let path = "path=/" + ";";
-//     let httpOnly = "httpOnly" + ";";
-//     let SameSite = "SameSite=Strict" + ";";
-
-
-//     return data + expires + path + httpOnly + SameSite
-// }
-
-
 const buildCookiesWithJWT = (key, val, rememberLogin) => {
     var now = new Date();
     var time = now.getTime();
+    
     // 7 day expires cookie if remember login/ if not 1 day
+    var token = '';
     if (!rememberLogin) {
         time += ((3600 * 1000) * 24);
+        token = jwt.sign({ sess: val }, process.env.APPKEY, { expiresIn: "1 days" });
     } else {
         time += ((3600 * 1000) * 24 * 7);
+        token = jwt.sign({ sess: val }, process.env.APPKEY, { expiresIn: "7 days" });
     }
 
     now.setTime(time);
-    var token = jwt.sign({ sess: val }, process.env.APPKEY, {expiresIn : "1 days"});
+    
+    // encrypt jwt token :
+    token = encryptBro(process.env.APPKEY, token);
 
     let data = key + "=" + token + ";";
     let expires = "expires=" + now.toUTCString() + ";";
     let path = "path=/" + ";";
     let httpOnly = "httpOnly" + ";";
     let SameSite = "SameSite=Strict" + ";";
+    let cookies = data + expires + path + httpOnly + SameSite;
 
     return {
         "token": token,
-        "cookies": data + expires + path + httpOnly + SameSite
+        "cookies": cookies,
     }
+}
+
+export const encryptBro = (key, val) => {
+    var cipher = crypto.createCipher('aes-256-cbc', key);
+    var crypted = cipher.update(val, 'utf8', 'hex');
+    crypted += cipher.final('hex');
+    return crypted;
+}
+
+export const decryptBro = (key, val) => {
+    var decipher = crypto.createDecipher('aes-256-cbc', key);
+    var dec = decipher.update(val, 'hex', 'utf8');
+    dec += decipher.final('utf8');
+    return dec;
 }
 
 export const getCookie = (key, req) => {

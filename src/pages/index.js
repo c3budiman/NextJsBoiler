@@ -11,42 +11,42 @@ export default function Index({ isConnected, mysqlCon, hostMongo, hostMysql }) {
             <title>NextJS Simple Boiler Template</title>
             <NavbarPrimary activeMenu="home" />
             {/* <div style={{ height: "50px" }}></div> */}
-            <div className="my-pictures">
-                <Image src="/images/next.jpeg" width="1440" height="800" alt="Profile Picture" />
-            </div>
-            <div className="intro-section">
-                <div className="inside header">
-                    <div className="row">
-                        <div className="col-3 col-lg-1">
-                            <Image className='ppgw' src="/images/cecep.jpg" width="100" height="100" alt="Profile Picture" />
-                        </div>
-                        <div className="col-9 col-lg-6 my-auto">
-                            <h5>Welcome to next.js boiler example!</h5>
-                        </div>
-                        <div className="col-12 col-lg-5">
-                            <h5>
-                                Service Available :
-                            </h5>
+            <div className='max1444'>
+                <div className="my-pictures">
+                    <Image src="/images/next.jpeg" width="1440" height="800" alt="Profile Picture" />
+                </div>
+                <div className="intro-section">
+                    <div className="inside header">
+                        <div className="row">
+                            <div className="col-3 col-lg-1">
+                                <Image className='ppgw' src="/images/cecep.jpg" width="100" height="100" alt="Profile Picture" />
+                            </div>
+                            <div className="col-9 col-lg-6 my-auto">
+                                <h5>Welcome to next.js boiler example!</h5>
+                            </div>
+                            <div className="col-12 col-lg-5">
+                                <h5>
+                                    Service Available :
+                                </h5>
 
-                            <ul>
-                                {isConnected ? (
-                                    <li>MongoDB is Up at : {hostMongo}</li>
-                                ) : null}
+                                <ul>
+                                    {isConnected ? (
+                                        <li>MongoDB is Up at : {hostMongo}</li>
+                                    ) : null}
 
-                                {mysqlCon ? (
-                                    <li>Mysql is Up at : {hostMysql}</li>
-                                ) : null}
-                            </ul>
+                                    {mysqlCon ? (
+                                        <li>Mysql is Up at : {hostMysql}</li>
+                                    ) : null}
+                                </ul>
+                            </div>
                         </div>
+                        <br />
                     </div>
+
                     <br />
                 </div>
-
-
-
-                <br />
-                {/* <GreenButton text="Our Repo" type="button" onClick={() => alert('wow you clicked it!')} /> */}
             </div>
+
         </>
     )
 }

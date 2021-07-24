@@ -38,6 +38,10 @@
         max-width: 1444px!important;
         margin: 0 auto;
     }
+    .max1444 {
+        max-width: 1444px!important;
+        margin: 0 auto;
+    }
 }
 
 .notif-overlay-clickable {
@@ -58,9 +62,6 @@
     right: 5vw;
     z-index: 21;
     border-radius: 10px;
-}
-
-.search-overlay {
     -webkit-animation: fadein 2s;
     /* Safari, Chrome and Opera > 12.1 */
     -moz-animation: fadein 2s;

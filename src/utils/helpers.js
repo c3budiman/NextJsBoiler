@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { getCookie } from '../drivers/redis/session';
+import { getCookie, decryptBro } from '../drivers/redis/session';
 
 export function emptyToString(str) {
     return typeof (str) == "undefined" ? "" : str == null ? "" : str
@@ -75,7 +75,8 @@ export async function getSessionFromHeader(req) {
                 }
 
                 try {
-                    let verifiedjwt = await jwt.verify(bearer, process.env.APPKEY);
+                    let decrypted = decryptBro(process.env.APPKEY, bearer);
+                    let verifiedjwt = await jwt.verify(decrypted, process.env.APPKEY);
                     return {
                         'code': 0,
                         'info': 'ok',
@@ -113,12 +114,6 @@ export async function getSessionFromHeader(req) {
         };
     }
 
-}
-
-export function getCookieFromBrowser(name) {
-    var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-    if (match) return match[2];
-    return null;
 }
 
 
