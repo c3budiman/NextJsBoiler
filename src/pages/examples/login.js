@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic'
 const GreenButton = dynamic(() => import('../../components/button/GreenButton'))
-const ExampleLayout = dynamic(() => import('../../components/layout/ExampleLayout'))
+const ExampleLayout = dynamic(() => import('../../components/Layout/ExampleLayout'))
 import { getProfile } from '../../redux/action/users/getProfile';
 import { postLogin } from '../../redux/action/postLogin';
 import { useSelector, shallowEqual } from 'react-redux';

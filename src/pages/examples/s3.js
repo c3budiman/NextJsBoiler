@@ -2,7 +2,7 @@ import React, {
     useState
 } from 'react';
 import dynamic from 'next/dynamic'
-const ExampleLayout = dynamic(() => import('../../components/layout/ExampleLayout'))
+const ExampleLayout = dynamic(() => import('../../components/Layout/ExampleLayout'))
 
 export default function S3Upload() {
     const [imageupload, setImage] = useState('');
