@@ -5,7 +5,8 @@ import React, {
 	useEffect
 } from 'react';
 import Skeleton from 'react-loading-skeleton'
-import ExampleLayout from '../../components/Layout/ExampleLayout'
+import dynamic from 'next/dynamic'
+const ExampleLayout = dynamic(() => import('../../components/layout/ExampleLayout'))
 
 export default function SPA() {
 	useEffect(() => {

@@ -1,11 +1,11 @@
-import ExampleLayout from '../../components/Layout/ExampleLayout';
+import dynamic from 'next/dynamic'
 const GreenButton = dynamic(() => import('../../components/button/GreenButton'))
+const ExampleLayout = dynamic(() => import('../../components/layout/ExampleLayout'))
 import { getProfile } from '../../redux/action/users/getProfile';
 import { postLogin } from '../../redux/action/postLogin';
 import { useSelector, shallowEqual } from 'react-redux';
 import { initializeStore } from '../../redux/store';
 import HashLoader from "react-spinners/HashLoader";
-import dynamic from 'next/dynamic'
 import Image from 'next/image';
 import React, {
     useState,

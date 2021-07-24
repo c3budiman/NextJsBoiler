@@ -1,7 +1,8 @@
 import { initializeStore } from '../../redux/store'
 import { getDog } from '../../redux/action/getDog'
 import { useSelector, shallowEqual } from 'react-redux'
-import ExampleLayout from '../../components/Layout/ExampleLayout'
+import dynamic from 'next/dynamic'
+const ExampleLayout = dynamic(() => import('../../components/layout/ExampleLayout'))
 
 export default function SSG() {
     let dogImage = useSelector(
