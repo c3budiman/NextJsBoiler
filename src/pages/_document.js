@@ -15,9 +15,12 @@ class MyDocument extends Document {
           <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
           <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
 
-          <meta property="og:description" content="NextJs Boiler template by c3budiman"/>
-          <meta charSet="utf-8"/>
-          <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
+          <meta charSet="utf-8" />
+          <meta name="keywords" content="NextJs, Template, Boiler" />
+          <meta name="description" content="NextJs Boiler template" />
+          <meta property="og:description" content="NextJs Boiler template" />
+          <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+          <meta name="author" content="Cecep Budiman" />
         </Head>
         <body>
           <Main />
