@@ -27,7 +27,7 @@ export async function FetcherPost(url, data, { params, headers } = {}) {
         if (response.status === 200) {
             if (response.data.code != 0) {
                 // you can log error or anything here...
-                await axios.post('/api/log/insertlog', {
+                axios.post('/api/log/insertlog', {
                     url: url,
                     input: data,
                     output: response.data,
@@ -37,7 +37,7 @@ export async function FetcherPost(url, data, { params, headers } = {}) {
             return response.data;
         } else {
             // you can log error or anything here...
-            await axios.post('/api/log/insertlog', {
+            axios.post('/api/log/insertlog', {
                 url: url,
                 input: data,
                 output: response.data,
