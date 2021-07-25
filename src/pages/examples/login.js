@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic'
 const GreenButton = dynamic(() => import('../../components/button/GreenButton'))
 const ExampleLayout = dynamic(() => import('../../components/Layout/ExampleLayout'))
 import { getProfile } from '../../redux/action/users/getProfile';
-import { postLogin } from '../../redux/action/postLogin';
+import { postLogin } from '../../redux/action/users/postLogin';
 import { useSelector, shallowEqual } from 'react-redux';
 import { initializeStore } from '../../redux/store';
 import HashLoader from "react-spinners/HashLoader";

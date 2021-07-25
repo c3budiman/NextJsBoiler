@@ -67,7 +67,7 @@ export async function getSessionFromHeader(req) {
         }
 
         if (token != "") {
-            if (token.length > 7) {
+            if (token?.length > 7 ?? false) {
                 // console.log(token.substring(7))
                 let bearer = token;
                 if (getTokenFromHeader) {
@@ -75,6 +75,7 @@ export async function getSessionFromHeader(req) {
                 }
 
                 try {
+                    // this is a two decrypter one is for our sha256 and the other is for our jwt.
                     let decrypted = decryptBro(process.env.APPKEY, bearer);
                     let verifiedjwt = await jwt.verify(decrypted, process.env.APPKEY);
                     return {

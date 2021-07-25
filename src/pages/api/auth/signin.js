@@ -22,19 +22,21 @@ async function userSignIn(req, res) {
                 id: users.data[0].id,
                 role: users.data[0].role,
                 username: users.data[0].username,
-                bio: users.data[0].bio,
-                images: users.data[0].images
             }
 
             let session_result = await setSession(req, res, JSON.stringify(session), process.env.APPNAME, false)
 
             if (session_result.code == 0) {
-                return res.status(200).json({ code: 0, info: 'Login Suceed', data: session, token: session_result })
+                return res.status(200).json({ code: 0, info: 'Login Suceed', data: users.data[0], token: session_result })
             } else {
                 return res.status(200).json(session_result)
             }
         } else {
-            return res.status(200).json(users)
+            return res.status(200).json({
+                code: 400,
+                info: "username / password doesnt match!",
+                error: users
+            })
         }
     } catch (error) {
         console.log(error)

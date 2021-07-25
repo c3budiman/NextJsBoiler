@@ -24,7 +24,7 @@ export default function Index({ isConnected, mysqlCon, hostMongo, hostMysql }) {
                     <div className="inside header">
                         <div className="row">
                             <div className="col-3 col-lg-1">
-                                <Image className='ppgw' src="/images/cecep.jpg" width="100" height="100" alt="Profile Picture" />
+                                <Image className='ppgwhome' src="/images/cecep.jpg" width="100" height="100" alt="Profile Picture" />
                             </div>
                             <div className="col-9 col-lg-6 my-auto">
                                 <h5>Welcome to next.js boiler example!</h5>

@@ -19,7 +19,6 @@ async function editData(req, res) {
         var update = await mysqlQuery(sql, param)
         if (update.code == 0) {
             sessionUser.data.role = body.role;
-            sessionUser.data.bio = body.bio;
 
             var asd = await setSession(req, res, JSON.stringify(sessionUser.data), process.env.APPNAME, false)
 
