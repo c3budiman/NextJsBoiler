@@ -1,4 +1,6 @@
 import axios from 'axios';
+import getConfig from 'next/config'
+const { serverRuntimeConfig } = getConfig()
 
 export async function FetcherGet(url, { params, headers } = {}) {
     try {
@@ -25,8 +27,11 @@ export async function FetcherPost(url, data, { params, headers } = {}) {
     try {
         const response = await axios.post(url, data, { params, headers });
         if (response.status === 200) {
-            if (response.data.code != 0) {
-                // you can log error or anything here...
+            // you can log error or anything here...
+            // you can enable it inside next.config.
+            // but please note, it wont work on serverless, you need db to store error logs.
+            // if you want it to work on serverless.
+            if (response.data.code != 0 && serverRuntimeConfig.EnableLogging) {
                 axios.post('/api/log/insertlog', {
                     url: url,
                     input: data,
@@ -37,11 +42,13 @@ export async function FetcherPost(url, data, { params, headers } = {}) {
             return response.data;
         } else {
             // you can log error or anything here...
-            axios.post('/api/log/insertlog', {
-                url: url,
-                input: data,
-                output: response.data,
-            });
+            if (serverRuntimeConfig.EnableLogging) {
+                axios.post('/api/log/insertlog', {
+                    url: url,
+                    input: data,
+                    output: response.data,
+                });
+            }
 
             return {
                 code: -1,
