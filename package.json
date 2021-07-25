@@ -9,6 +9,9 @@
   "dependencies": {
     "@aws-cdk/aws-s3": "^1.71.0",
     "@aws-cdk/core": "1.71.0",
+    "@fortawesome/fontawesome-svg-core": "^1.2.35",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@fortawesome/react-fontawesome": "^0.1.14",
     "@testing-library/dom": "^7.26.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",

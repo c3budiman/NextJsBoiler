@@ -6,6 +6,6 @@ module.exports = {
         PROJECT_ROOT: __dirname,
     },
     publicRuntimeConfig: {
-        EnableLogging: false,
+        EnableLogging: true,
     }
 }

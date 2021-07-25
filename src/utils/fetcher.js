@@ -23,9 +23,16 @@ export async function FetcherGet(url, { params, headers } = {}) {
     }
 }
 
-export async function FetcherPost(url, data, { params, headers } = {}) {
+export async function FetcherPost(url, data) {
     try {
-        const response = await axios.post(url, data, { params, headers });
+        if (typeof window === 'undefined') {
+            url = 'http://localhost:3000' + url;
+        }
+
+        const response = await axios.post(url, data, {
+            withCredentials: true,
+        });
+
         if (response.status === 200) {
             // you can log error or anything here...
             // you can enable it inside next.config.
@@ -49,6 +56,7 @@ export async function FetcherPost(url, data, { params, headers } = {}) {
                     output: response.data,
                 });
             }
+            console.error(response);
 
             return {
                 code: -1,

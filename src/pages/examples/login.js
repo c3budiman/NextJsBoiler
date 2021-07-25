@@ -163,6 +163,18 @@ export default function Login() {
                                                     {Users.data.data.bio}
                                                 </td>
                                             </tr>
+                                            {
+                                                Users.data.data.role == 1 ?
+                                                    <tr>
+                                                        <td colSpan="3">
+                                                            <a className="btn btn-info" href="/admin">Access Admin Pages</a>
+                                                        </td>
+                                                    </tr>
+                                                    :
+                                                    <>
+                                                    </>
+                                            }
+
 
                                         </table>
                                     </div>
