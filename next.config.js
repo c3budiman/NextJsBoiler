@@ -4,6 +4,8 @@ module.exports = {
     },
     serverRuntimeConfig: {
         PROJECT_ROOT: __dirname,
+    },
+    publicRuntimeConfig: {
         EnableLogging: false,
     }
 }
