@@ -8,7 +8,7 @@ import AppProvider from "../components/shared/AppProvider";
 import { GlobalStyles } from "../components/styles/GlobalStyles";
 import Head from "next/head";
 import NProgress from "nprogress";
-import Page from "../components/Page";
+import Page from "../components/page";
 import Router from "next/router";
 
 Router.events.on("routeChangeStart", () => NProgress.start());
