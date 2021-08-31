@@ -74,8 +74,8 @@ export async function getServerSideProps() {
     //checking mongo connection :
     const { client } = await connectToDatabase()
     const isConnected = await client.isConnected()
-    const hostMysql = "XXXX" + process.env.DB_HOST.substring(37)
-    const hostMongo = "XXXX" + process.env.MONGODB_URI.substring(31)
+    const hostMysql = "XXXX" + process.env?.DB_HOST?.substring(37) ?? "c4budiman.com"
+    const hostMongo = "XXXX" + process.env?.MONGODB_URI?.substring(31) ?? "c4budiman.com"
 
     return {
         props: { isConnected, mysqlCon, hostMysql, hostMongo },
