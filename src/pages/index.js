@@ -11,7 +11,8 @@ export default function Index({ isConnected, mysqlCon, hostMongo, hostMysql }) {
     return (
         <>
             <Head>
-                <title>NextJS Simple Boiler Template</title>
+                <title>NextJS Boiler Template</title>
+                <link rel="stylesheet" href="/bootstrap.css" />
             </Head>
 
             <NavbarPrimary activeMenu="home" />

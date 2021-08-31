@@ -8,6 +8,7 @@ export default function Examples() {
         <>
             <Head>
                 <title>Examples | NextJS Simple Boiler Template</title>
+                <link rel="stylesheet" href="/bootstrap.css" />
             </Head>
             <NavbarPrimary activeMenu="examples" noTransparent={true} />
             <div style={{ height: "100px" }}></div>
