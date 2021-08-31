@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic'
-const GreenButton = dynamic(() => import('../../components/button/GreenButton'))
+// const GreenButton = dynamic(() => import('../../components/button/GreenButton'))
 const ExampleLayout = dynamic(() => import('../../components/Layout/ExampleLayout'))
 import { getProfile } from '../../redux/action/users/getProfile';
 import { postLogin } from '../../redux/action/users/postLogin';
@@ -179,7 +179,7 @@ export default function Login() {
                                         </table>
                                     </div>
                                     <div className="col-lg-3">
-                                        <GreenButton text="Logout" type="button" onClick={doLogout} />
+                                        <button type="button" onClick={doLogout}> Logout</button>
                                     </div>
                                 </div>
                             </div>

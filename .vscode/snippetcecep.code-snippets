@@ -1,0 +1,68 @@
+{
+  "Import Moment Package": {
+    "scope": "javascript,typescript",
+    "prefix": "impmom",
+    "body": ["import moment from 'moment';"],
+    "description": "Import Moment Package"
+  },
+  "Import Head NextJS": {
+    "scope": "javascript,typescript",
+    "prefix": "imphead",
+    "body": ["import Head from \"next/head\";"],
+    "description": "Import Head NextJS"
+  },
+  "Use Head NextJS": {
+    "scope": "jsx",
+    "prefix": "<Head",
+    "body": ["<Head>", "\t ${1}", "</Head>"],
+    "description": "Use Head NextJS"
+  },
+  "Add Custom CSS": {
+    "scope": "jsx",
+    "prefix": "<link",
+    "body": ["<link rel=\"stylesheet\" href=\"${1}\" />"],
+    "description": "Add Custom CSS"
+  },
+  "Use Col": {
+    "scope": "jsx",
+    "prefix": "<Col",
+    "body": ["<Col xs={$1} sm={$1} md={$1} lg={$1} >", "\t ${2}", "</Col>"],
+    "description": "Use Col"
+  },
+  "Add Classname": {
+    "prefix": "cl",
+    "body": ["className=\"$1\""],
+    "description": "Add classname"
+  },
+  "Use Row": {
+    "scope": "jsx",
+    "prefix": "<Row",
+    "body": ["<Row >", "\t ${1}", "</Row>"],
+    "description": "Use Row"
+  },
+  "Color White": {
+    "scope": "css",
+    "prefix": "colWhite",
+    "body": ["#fff;"],
+    "description": "Color White"
+  },
+  "ConstPage": {
+    "scope": "jsx",
+    "prefix": "<ConstPage",
+    "body": [
+      "import { useEffect, useState } from \"react\";",
+      "",
+      "",
+      "const ${NewPage}${1} = () => {",
+      "",
+      "\treturn (",
+      "\t\t<>",
+      "\t\t\t ${2}",
+      "\t\t</>",
+      "\t)",
+      "}",
+      "export default ${NewPage}${1};"
+    ],
+    "description": "builder for hook component"
+  }
+}
