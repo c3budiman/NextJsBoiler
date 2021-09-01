@@ -10,6 +10,7 @@ import {
     NavLink,
     // NavbarText
 } from 'reactstrap';
+import Link from 'next/link';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
@@ -38,10 +39,14 @@ const NavbarPrimary = (props) => {
             <Collapse style={{ margin: "0px 40px" }} className="menu-navigation" isOpen={isOpen} navbar>
                 <Nav className="mr-auto" navbar>
                     <NavItem>
-                        <NavLink className={props.activeMenu === "home" ? "active" : ""} href="/">Home</NavLink>
+                        <Link href="/">
+                            <NavLink className={props.activeMenu === "home" ? "active" : ""} href="/">Home</NavLink>
+                        </Link>
                     </NavItem>
                     <NavItem>
-                        <NavLink className={props.activeMenu === "examples" ? "active" : ""} href="/examples">Examples</NavLink>
+                        <Link href="/examples">
+                            <NavLink className={props.activeMenu === "examples" ? "active" : ""} href="/examples">Examples</NavLink>
+                        </Link>
                     </NavItem>
                 </Nav>
             </Collapse>

@@ -14,6 +14,7 @@ import React, {
     // useRef,
 } from 'react';
 import md5 from 'md5';
+import Link from 'next/link';
 
 export default function Login() {
     const stateLogin = ['noauth', 'loading', 'auth', 'error'];
@@ -167,7 +168,9 @@ export default function Login() {
                                                 Users.data.data.role == 1 ?
                                                     <tr>
                                                         <td colSpan="3">
-                                                            <a className="btn btn-info" href="/admin">Access Admin Pages</a>
+                                                            <Link href="/admin">
+                                                                <a className="btn btn-info" href="/admin">Access Admin Pages</a>
+                                                            </Link>
                                                         </td>
                                                     </tr>
                                                     :
