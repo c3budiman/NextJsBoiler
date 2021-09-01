@@ -1,4 +1,4 @@
-import { Avatar, Badge, Layout, List, Menu } from "antd";
+import { Avatar, Badge, Layout, List, Menu, Dropdown } from "antd";
 import { BellTwoTone } from '@ant-design/icons';
 import DashHeader, { Notification } from "./styles/Header";
 
@@ -13,6 +13,47 @@ const { Header } = Layout;
 const MainHeader = () => {
     const [state, dispatch] = useAppState();
     const [notifications] = useState(MockNotifications);
+
+    const menuDesktop = (
+        <>
+            <Menu>
+                <Link href="/">
+                    <a style={{ color: "#000" }}>
+                        <Menu.Item>Settings</Menu.Item>
+                    </a>
+                </Link>
+            </Menu>
+            <Menu>
+                <Link href="/">
+                    <a style={{ color: "#000" }}>
+                        <Menu.Item>Profile</Menu.Item>
+                    </a>
+                </Link>
+            </Menu>
+            <Menu>
+                <Link href="/">
+                    <a style={{ color: "#000" }}>
+                        <Menu.Item>Notification</Menu.Item>
+                    </a>
+                </Link>
+            </Menu>
+            <Menu.Divider />
+            {/* <Menu>
+                <Menu.Item>
+                    <Link href="//one-readme.fusepx.com">
+                        <a>Help?</a>
+                    </Link>
+                </Menu.Item>
+            </Menu> */}
+            <Menu>
+                <Link href="/">
+                    <a style={{ color: "#000" }}>
+                        <Menu.Item>Signout</Menu.Item>
+                    </a>
+                </Link>
+            </Menu>
+        </>
+    )
     return (
         <DashHeader>
             <Header>
@@ -37,6 +78,7 @@ const MainHeader = () => {
                             </a>
                         </Menu.Item>
                     )}
+
                     {
                         !state.mobile && (
                             <div onClick={() => { dispatch({ type: 'collapse' }) }} className="pointer mx-4">
@@ -47,6 +89,11 @@ const MainHeader = () => {
 
                     <span className="mr-auto" />
 
+                    <Dropdown overlay={(menuDesktop)}>
+                        <Avatar className="mx-4 my-auto" src="/images/cecep.jpg" />
+                    </Dropdown>
+                    {/* <SubMenu title={}>
+                    </SubMenu> */}
 
                     <SubMenu
                         title={
@@ -81,18 +128,7 @@ const MainHeader = () => {
                         </Menu.Item>
                     </SubMenu>
 
-                    <SubMenu title={<Avatar src="/images/avatar.jpg" />}>
-                        <Menu.Item>Settings</Menu.Item>
-                        <Menu.Item>Profile</Menu.Item>
-                        <Menu.Item>Notifications</Menu.Item>
-                        <Menu.Divider />
-                        <Menu.Item>
-                            <Link href="//one-readme.fusepx.com">
-                                <a>Help?</a>
-                            </Link>
-                        </Menu.Item>
-                        <Menu.Item>Signout</Menu.Item>
-                    </SubMenu>
+
                 </Menu>
             </Header>
         </DashHeader>

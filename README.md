@@ -13,6 +13,7 @@ What It Contains?
 
 - custom server if you want to enabled, just go to pages/custom-server-express.js or pages/custom-server-node.js
 - Redux, Redux Thunk, Redux Middleware
+- ANTD
 - Bootstrap
 - custom document
 - custom app.js
@@ -38,12 +39,31 @@ What my next goal for this boiler template?
 
 How to use?
 
-1. copy .env.example to .env
-2. fill all the .env
-3. npm install
-4. start dev using npm run dev
-5. start build using npm run build
-6. ship it on custom server or vercel or whatever it supports both serverless and custom server.
+- clone this repo
+- rename the folder and cd to it.
+- run this in terminal
+
+```bash
+git remote remove origin
+```
+
+- create new repo as for your project and add origin.
+- copy .env.example to .env
+- fill the required data to .env
+- run npm install
+
+```bash
+npm install
+```
+
+- start dev
+
+```bash
+npm run dev
+```
+
+- start build using npm run build
+- ship it on custom server or vercel or whatever it supports both serverless and custom server.
 
 Aws S3 instruction :
 

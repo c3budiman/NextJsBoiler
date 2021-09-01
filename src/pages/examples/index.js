@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic'
 const NavbarPrimary = dynamic(() => import('../../components/Navbar/NavbarPrimary'))
 import Head from 'next/head'
-
+import Link from 'next/link';
 
 export default function Examples() {
     return (
@@ -15,19 +15,29 @@ export default function Examples() {
             <div className='max1444'>
                 <ul>
                     <li>
-                        <a href="/examples/login">Login</a>
+                        <Link href="/examples/login">
+                            <a href="/examples/login">Login</a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="/examples/s3">S3 Upload Image</a>
+                        <Link href="/examples/s3">
+                            <a href="/examples/s3">S3 Upload Image</a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="/examples/spa">SPA Fetch</a>
+                        <Link href="/examples/spa">
+                            <a href="/examples/spa">SPA Fetch</a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="/examples/ssg">SSG Fetch</a>
+                        <Link href="/examples/ssg">
+                            <a href="/examples/ssg">SSG Fetch</a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="/examples/ssr">SSR Fetch</a>
+                        <Link href="/examples/ssr">
+                            <a href="/examples/ssr">SSR Fetch</a>
+                        </Link>
                     </li>
                 </ul>
             </div>
