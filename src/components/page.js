@@ -34,35 +34,6 @@ const Page = ({ router, children }) => {
     const [state, dispatch] = useAppState();
     const isNotDashboard = NonDashboardRoutes.includes(router.pathname);
 
-    // useEffect(() => {
-    //     // checkSession(router.pathname).then(data => setState(data));
-    //     // axios.get(url, { params, headers });
-    //     // checking session
-    //     // setLoading(true)
-    //     // dispatch({ type: "showLoading" });
-    //     axios.get('/api/getSession')
-    //         .then(function (response) {
-    //             // handle success
-    //             // console.log(response.data);
-    //             if (router.pathname == "/login") {
-    //                 if (response.data.code == 0) {
-    //                     window.location.href = "/"
-    //                 }
-    //             } else {
-    //                 if (response.data.code != 0) {
-    //                     // router.push("/login?code=2")
-    //                     window.location.href = "/login?code=2"
-    //                 }
-    //             }
-    //             setLoading(false)
-    //         })
-    //         .catch(function (error) {
-    //             // handle error
-    //             setLoading(false)
-    //             console.log(error);
-    //         });
-    // }, []);
-
     return (
         <Spin tip="Memuat..." size="large" spinning={state.loading || loading}>
             <ThemeProvider theme={theme}>

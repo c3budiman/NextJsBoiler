@@ -1929,6 +1929,9 @@ const GlobalStyles = createGlobalStyle`
   .pointer {
     cursor: pointer;
   }
+  .ant-notification {
+    z-index: 9999;
+  }
 `;
 
 export { GlobalStyles, theme };

@@ -16,18 +16,18 @@ export default function userReducer(state = defaultState, action) {
             }
 
         case 'POST_LOGIN_FULFILLED':
-            if (action.payload.code == 0) {
+            if (action.payload?.data?.code == 0) {
                 return {
                     isPending: false,
                     state: 'auth',
-                    data: action.payload,
+                    data: action.payload?.data,
                 };
             }
             else {
                 return {
                     isPending: false,
                     state: 'error',
-                    data: action.payload,
+                    data: action.payload?.data,
                 };
             }
 
@@ -42,18 +42,18 @@ export default function userReducer(state = defaultState, action) {
             };
 
         case 'GET_PROFILE_FULFILLED':
-            if (action.payload.code == 0) {
+            if (action.payload?.data?.code == 0) {
                 return {
                     isPending: false,
                     state: 'auth',
-                    data: action.payload,
+                    data: action.payload?.data,
                 };
             }
             else {
                 return {
                     isPending: false,
                     state: 'error',
-                    data: action.payload,
+                    data: action.payload?.data,
                 };
             }
 

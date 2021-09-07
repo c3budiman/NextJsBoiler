@@ -46,7 +46,7 @@ export default function Login() {
 
     async function doLogout() {
         const logout = await FetcherPost('/api/auth/signout');
-        if (logout.code == 0) {
+        if (logout.data.code == 0) {
             await dispatch(getProfile())
         }
         console.log(logout);
@@ -97,7 +97,7 @@ export default function Login() {
                                     placeholder="Password" />
                             </div>
 
-                            {!Users.isPending ? <p>{Users.data.info}</p> : null}
+                            {!Users.isPending ? <p>{Users?.data?.info}</p> : null}
 
                             <button
                                 onClick={doLogin}
@@ -139,7 +139,7 @@ export default function Login() {
                                                     &nbsp;:&nbsp;
                                                 </td>
                                                 <td>
-                                                    {Users.data.data.username}
+                                                    {Users?.data?.data?.username}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -150,7 +150,7 @@ export default function Login() {
                                                     &nbsp;:&nbsp;
                                                 </td>
                                                 <td>
-                                                    {Users.data.data.role == 1 ? "Admin" : "Users"}
+                                                    {Users?.data?.data?.role == 1 ? "Admin" : "Users"}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -165,7 +165,7 @@ export default function Login() {
                                                 </td>
                                             </tr>
                                             {
-                                                Users.data.data.role == 1 ?
+                                                Users?.data?.data?.role == 1 ?
                                                     <tr>
                                                         <td colSpan="3">
                                                             <Link href="/admin">

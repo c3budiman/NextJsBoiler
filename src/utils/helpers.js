@@ -1,5 +1,60 @@
 import jwt from 'jsonwebtoken';
-import { getCookie, decryptBro } from '../drivers/redis/session';
+// import { getCookie, decryptBro } from '../drivers/redis/session';
+import cookie from 'js-cookie';
+
+
+export const handleSessions = async (ctx) => {
+    let sessionUser = await getSessionFromHeader(ctx.req);
+    if (sessionUser.code == 0) {
+        return { props: { session: sessionUser } }
+    } else {
+        return {
+            redirect: {
+                destination: '/examples/login',
+                permanent: false,
+            },
+        }
+    }
+}
+
+export const encryptBro = (key, val) => {
+    var cipher = crypto.createCipher('aes-256-cbc', key);
+    var crypted = cipher.update(val, 'utf8', 'hex');
+    crypted += cipher.final('hex');
+    return crypted;
+}
+
+export const decryptBro = (key, val) => {
+    var decipher = crypto.createDecipher('aes-256-cbc', key);
+    var dec = decipher.update(val, 'hex', 'utf8');
+    dec += decipher.final('utf8');
+    return dec;
+}
+
+export const getCookie = (key, req) => {
+    return process.browser
+        ? getCookieFromBrowser(key)
+        : getCookieFromServer(key, req);
+};
+
+const getCookieFromBrowser = key => {
+    return cookie.get(key);
+};
+
+const getCookieFromServer = (key, req) => {
+
+    if (!req.headers.cookie) {
+        return undefined;
+    }
+
+    const rawCookie = req.headers.cookie
+        .split(';')
+        .find(c => c.trim().startsWith(`${key}=`));
+    if (!rawCookie) {
+        return undefined;
+    }
+    return rawCookie.split('=')[1];
+};
 
 export function emptyToString(str) {
     return typeof (str) == "undefined" ? "" : str == null ? "" : str
@@ -15,11 +70,11 @@ export function rejectNull(str, label, res, message) {
     }
 
     if (typeof (str) == "undefined") {
-        res.status(200).json(ApiFormat(500, message, []))
+        res.status(400).json(ApiFormat(500, message, []))
         throw new Error("data is empty");
     } else {
         if (str == null) {
-            res.status(200).json(ApiFormat(500, message, []))
+            res.status(400).json(ApiFormat(500, message, []))
             throw new Error("data is empty");
         } else {
             return str
@@ -82,11 +137,11 @@ export async function getSessionFromHeader(req) {
                         'code': 0,
                         'info': 'ok',
                         'data': {
-                            'id': JSON.parse(verifiedjwt.sess).id,
-                            'username': JSON.parse(verifiedjwt.sess).username,
-                            'role': JSON.parse(verifiedjwt.sess).role,
-                            'bio': JSON.parse(verifiedjwt.sess).bio,
-                            'images': JSON.parse(verifiedjwt.sess).images
+                            'id': JSON.parse(verifiedjwt.sess)?.id ?? "",
+                            'username': JSON.parse(verifiedjwt.sess)?.username ?? "",
+                            'role': JSON.parse(verifiedjwt.sess)?.role ?? "",
+                            'bio': JSON.parse(verifiedjwt.sess)?.bio ?? "",
+                            'images': JSON.parse(verifiedjwt.sess)?.images ?? ""
                         }
                     };
                 } catch (error) {

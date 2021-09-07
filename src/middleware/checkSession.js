@@ -7,7 +7,7 @@ const checkSession = (handler) => {
         let sessionUser = await getSessionFromHeader(req);
         if (sessionUser.code != 0) {
             console.log('userdont have session');
-            return res.status(200).json({
+            return res.status(401).json({
                 code: sessionUser.code,
                 info: sessionUser.info,
             })

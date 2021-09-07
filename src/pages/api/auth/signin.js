@@ -29,10 +29,10 @@ async function userSignIn(req, res) {
             if (session_result.code == 0) {
                 return res.status(200).json({ code: 0, info: 'Login Suceed', data: users.data[0], token: session_result })
             } else {
-                return res.status(200).json(session_result)
+                return res.status(400).json(session_result)
             }
         } else {
-            return res.status(200).json({
+            return res.status(400).json({
                 code: 400,
                 info: "username / password doesnt match!",
                 error: users
@@ -40,7 +40,7 @@ async function userSignIn(req, res) {
         }
     } catch (error) {
         console.log(error)
-        return res.status(200).json({
+        return res.status(500).json({
             code: 500,
             info: "failed to login",
             error: error

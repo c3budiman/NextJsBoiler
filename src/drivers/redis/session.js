@@ -1,6 +1,4 @@
-import { funcDateNowMili, isJson } from '../../utils/helpers';
-
-import cookie from 'js-cookie';
+import { funcDateNowMili, isJson, encryptBro, getCookie } from '../../utils/helpers';
 import Md5 from 'md5'
 import redis from 'redis';
 
@@ -147,7 +145,7 @@ export function delSession(req) {
 const buildCookiesWithJWT = (key, val, rememberLogin) => {
     var now = new Date();
     var time = now.getTime();
-    
+
     // 7 day expires cookie if remember login/ if not 1 day
     var token = '';
     if (!rememberLogin) {
@@ -159,7 +157,7 @@ const buildCookiesWithJWT = (key, val, rememberLogin) => {
     }
 
     now.setTime(time);
-    
+
     // encrypt jwt token :
     token = encryptBro(process.env.APPKEY, token);
 
@@ -176,41 +174,4 @@ const buildCookiesWithJWT = (key, val, rememberLogin) => {
     }
 }
 
-export const encryptBro = (key, val) => {
-    var cipher = crypto.createCipher('aes-256-cbc', key);
-    var crypted = cipher.update(val, 'utf8', 'hex');
-    crypted += cipher.final('hex');
-    return crypted;
-}
 
-export const decryptBro = (key, val) => {
-    var decipher = crypto.createDecipher('aes-256-cbc', key);
-    var dec = decipher.update(val, 'hex', 'utf8');
-    dec += decipher.final('utf8');
-    return dec;
-}
-
-export const getCookie = (key, req) => {
-    return process.browser
-        ? getCookieFromBrowser(key)
-        : getCookieFromServer(key, req);
-};
-
-const getCookieFromBrowser = key => {
-    return cookie.get(key);
-};
-
-const getCookieFromServer = (key, req) => {
-
-    if (!req.headers.cookie) {
-        return undefined;
-    }
-
-    const rawCookie = req.headers.cookie
-        .split(';')
-        .find(c => c.trim().startsWith(`${key}=`));
-    if (!rawCookie) {
-        return undefined;
-    }
-    return rawCookie.split('=')[1];
-};
