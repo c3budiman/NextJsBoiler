@@ -1,5 +1,4 @@
-import { encryptBro } from "../../../drivers/redis/session"
-import { rejectNull } from '../../../utils/helpers'
+import { rejectNull, encryptBro } from '../../../utils/helpers'
 
 async function handler(req, res) {
     let body = req.body
