@@ -1,7 +1,5 @@
 import jwt from 'jsonwebtoken';
-// import { getCookie, decryptBro } from '../drivers/redis/session';
 import cookie from 'js-cookie';
-
 
 export const handleSessions = async (ctx) => {
     let sessionUser = await getSessionFromHeader(ctx.req);
