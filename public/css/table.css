@@ -1,0 +1,32 @@
+.ant-table-wrapper>div>div>div>div>div>table>thead>tr>th {
+    background-color: #fff;
+    color: #33539E;
+    font-family: Nunito;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 19px;
+    border-bottom: 1px solid #33539E;
+}
+
+.ant-table-container table>thead>tr:first-child th:first-child {
+    border-top-left-radius: 20px !important;
+}
+
+.ant-table-container table>thead>tr:first-child th:last-child {
+    border-top-right-radius: 20px !important;
+}
+
+.ant-table-row-expand-icon {
+    border: 1px solid #33539E !important;
+    color: #33539E !important;
+}
+
+.ant-table-footer{
+    background-color: #f7f8fc !important;
+}
+
+.footer-text{
+    color: #33539E;
+    font-size: 14px;
+}

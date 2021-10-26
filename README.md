@@ -1,77 +1,194 @@
-# NextJsBoiler
+# Panduan
 
-[![CodeFactor](https://www.codefactor.io/repository/github/c3budiman/nextjsboiler/badge/main)](https://www.codefactor.io/repository/github/c3budiman/nextjsboiler/overview/main)
-[![Continous Integration NextJS Boiler](https://github.com/c3budiman/NextJsBoiler/actions/workflows/node.js.yml/badge.svg)](https://github.com/c3budiman/NextJsBoiler/actions/workflows/node.js.yml)
+## Mulai Menggunakan
 
-Boiler Template for next js project - by c3budiman.
-
-Demo URL : <https://next-js-boiler.vercel.app/>
-
-API Documentation : <https://documenter.getpostman.com/view/3745523/TVsoGVX2>
-
-What It Contains?
-
-- custom server if you want to enabled, just go to pages/custom-server-express.js or pages/custom-server-node.js
-- Redux, Redux Thunk, Redux Middleware
-- ANTD
-- Bootstrap
-- custom document
-- custom app.js
-- custom css (both global, and modular)
-- environment variables
-- UI testing (React and css)
-- unit test for api routes (/api)
-- Mongoose and Mongodb Integration (i prefer mongoose, but you can use mongodb too.)
-- Mysql Integration
-- integrating to session (redis)
-- integrating to elastic-search for maintenance and logging api activity and response time (custom-server-node)
-- integrating linter
-- adding example of ssg, ssr, spa with redux.
-- Amazon AWS S3 integration and examples
-- API Midleware Example
-
-What my next goal for this boiler template?
-
-- websocket
-- notification example / chat example
-- integrating firebase
-- adding example of crud data in frontend.
-
-How to use?
-
-- clone this repo
-- rename the folder and cd to it.
-- run this in terminal
+- clone repo ini.
+- rename folder hasil clone ke nama projek.
+- cd ke projek jalankan ini di cmd :
 
 ```bash
 git remote remove origin
 ```
 
-- create new repo as for your project and add origin.
-- copy .env.example to .env
-- fill the required data to .env
-- run npm install
+- lalu buat repo baru di datasintesaid or personal dan tambahkan origin sesuai dengan repo baru klean.
+- untuk jalanin nya biasa ae :
 
 ```bash
 npm install
-```
-
-- start dev
-
-```bash
 npm run dev
 ```
 
-- start build using npm run build
-- ship it on custom server or vercel or whatever it supports both serverless and custom server.
+## CSS
 
-Aws S3 instruction :
+- untuk menambah css global bisa di : \_app.js, import aja biasa kek dibawah. karena nextjs 11 udah support built in css.
 
-1. Create a new [IAM role](https://aws.amazon.com/iam/) with permission for `AWSCloudFormationFullAccess` and `AmazonS3FullAccess`.
-1. Save the access key and secret key.
-1. Install the [AWS CLI](https://aws.amazon.com/cli/) and run `aws configure`.
-1. This will prompt you to enter the access key and secret key.
-1. Run `npm run cdk deploy` to create an S3 bucket with the correct CORS settings.
-1. Visit your newly created S3 bucket and retrieve the name and region.
-1. Add the name and region to `.env`.
-1. done, you can customize the example in /api/s3. or the frontend in /s3/example
+```js
+import "../public/app.css";
+```
+
+- untuk yg page only, taro css lu di public/css/pagesnya. bisa kek diatas atau pake head gini.
+
+```js
+<Head>
+  <link rel="stylesheet" href="/css/pagesnya/styleanda.css" />
+</Head>
+```
+
+## Coloring
+
+- untuk mengubah tema warna, bisa langsung ke components/styles/GlobalStyles.js lalu ada const namanya theme. tinggal lu sesuaikan dah.
+
+```js
+const theme = {
+  primaryColor: "#007bff",
+};
+```
+
+## Untuk Sidebar
+
+- menu listing ada di lib/routes, tinggal tambah atau kurangi sesuka hati or sesuai figma :D
+- componentnya terdapat di components/SidebarMenu.js
+
+## Untuk Header
+
+- langsung aja edit di components/Header.js
+
+## Untuk Page yang tidak ingin menggunakan template
+
+- components/page.js => ada const namanya NonDashboardRoutes
+- lalu buat layout baru, dan sesuaikan di page.js tersebut tq.
+
+## Untuk Notification
+
+- Contoh
+
+```js
+import { notification } from "antd";
+
+notification["error"]({
+  message: "Error Title",
+  description: "Deskripsi error klean",
+});
+```
+
+## Untuk Loading Global Page / Fullpage.
+
+- Contoh
+
+```js
+import { useAppState } from "/components/shared/AppProvider";
+const YourPage = () => {
+  const [_state, dispatch] = useAppState();
+  // to show loading :
+  dispatch({ type: "showLoading" });
+
+  // to hide loading :
+  dispatch({ type: "hideLoading" });
+};
+```
+
+## Untuk Fetching API
+
+- pertama lu import dlu fetcher, tujuannya biar semua api dibungkus dlu lewat fungsi itu, jadi klo ada pergantian url atau harus global ada nambah param bisa diganti lewat fungsi itu aja.
+
+```js
+import { FetcherPost } from "../utils/fetcher";
+var response = await FetcherPost("/api/loginDummy", values);
+```
+
+### Untuk Navigation
+
+- import dlu function namanya PushNavigateTo atau ReplaceNavigateTo
+- PushNavigateTo akan stor history, jadi bisa di back oleh browser
+- ReplaceNavigateTo tidak akan stor history jadi tidak bisa di back. useful jika tidak ingin user back incidentally misal dia udah login, ga boleh dong balik lagi ke login setelah di dashboard.
+
+```js
+import { PushNavigateTo, ReplaceNavigateTo } from "../utils/helpersBrowser";
+
+if (response?.data?.code == 0) {
+  Message.success("Sign complete. Taking you to your dashboard!").then(() =>
+    ReplaceNavigateTo("/")
+  );
+}
+
+<a onClick={() => { PushNavigateTo('/forgot') }}> Forgot Password <a/>
+```
+
+### Untuk Sessions
+
+- import dlu function namanya handleSessions
+- param buat handleSessions adalah context, dan needlogin.
+- needlogin berguna jika ingin cek session tapi ga pengen di redirect ke /login klo doi belom login.
+- data sessionnya bisa di akses di props.session
+
+```js
+import { handleSessions } from "../utils/helpers";
+
+const SomePage = ({ session }) => {
+  // session dari user :
+  console.log(session)
+}
+
+// tempatkan dibawah sebelum export default
+export async function getServerSideProps(context) {
+  let checkSessions = await handleSessions(context, true);
+  return checkSessions;
+}
+
+export default SomePage;
+```
+
+## ENV
+
+- gw gasuka bikin file .env, tapi klo lu mau bikin bisa. tapi klo lu males ugha, silahkan ke next.config.js terus tambahin deh suka suka lu kek contoh dibawah. yg di nextconfig.js tapi di push ke git karena ga diignore. dan di server di pull juga. jadi be careful jgn masukkan settingan yg berbau local kesini.
+
+```js
+env: {
+    backend: "https://nms-poc-api.devlabs.id",
+    APPNAME: "boiler next js",
+  }
+```
+
+## Row Col
+
+- Row disini lu bisa pake sama ae kek bootstrap. cuman lebih bagus karena ada align, justify sama gutter.
+- Col tapi sedikit berbeda, di bootstrap max 12 disini max 24.
+- align buat vertical align bisa midle, top, bottom dll
+- justify buat horizontal align bisa start, center, space-between dll
+
+```js
+import { Row, Col } from "antd";
+
+<Row type="flex" align="middle" justify="start" gutter={[10, 10]}>
+  <Col xs={12} sm={12} md={12} lg={12}>
+    some content here 50%
+  </Col>
+  <Col xs={12} sm={12} md={12} lg={12}>
+    some content here also 50%
+  </Col>
+</Row>;
+```
+
+### Contributing
+
+- klo ada yg mau lu bagusin lagi, atau mau otak atik di boiler ini, sabi ae. dan agar tidak berantakan tolong jgn nambah package2 tidak jelas di package.json biar boiler ini tidak berat. serta tolong di cek linter nya dengan cara,
+
+```shell
+npm run initlint
+```
+
+- kalo hasilnya begini :
+
+```shell
+✔ No ESLint warnings or errors
+```
+
+- baru lu boleh push ke sini. otherwise fix dlu error klean ye.
+
+## References
+
+- Dokumentasi React <https://reactjs.org/docs/getting-started.html>
+- Dokumentasi Next.js <https://nextjs.org/docs/getting-started>
+- Dokumentasi ANTD <https://ant.design/components/overview/>
+- Git template full yg tidak di optimize <https://github.com/DatasintesaID/templateone-fe.git>
+- url preview live buat template <https://templateone-fe.vercel.app/>

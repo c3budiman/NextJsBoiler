@@ -1,0 +1,20 @@
+#nama, #email, #phone {
+    border-radius: 20px !important;
+    /* padding: 0px 20px; */
+}
+
+.ant-input-affix-wrapper {
+    border-radius: 20px !important;
+}
+
+.dropdownFilterWhitev3 {
+    background: #fff;
+    /* border: 1px solid #33539E; */
+    box-sizing: border-box;
+    border-radius: 20px;
+    padding: 4px 20px;
+    color: rgba(0, 0, 0, 0.65);
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}

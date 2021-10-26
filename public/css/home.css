@@ -1,0 +1,20 @@
+.updatedBlueText{
+    color: #33539E;
+    font-size: 12px;
+    padding-bottom: 12px;
+}
+
+.cardTitle{
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.cardSubtitle{
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.cardPercent{
+    font-size: 16px;
+    font-weight: bold;
+}

@@ -1,75 +1,21 @@
-// module.exports = {
-// images: {
-//     domains: ['avatars1.githubusercontent.com', 'hellocdkstack-nextjsboilerb3735f9c-1hcfw1w0txr1g.s3.ap-southeast-1.amazonaws.com'],
-// },
-// serverRuntimeConfig: {
-//     PROJECT_ROOT: __dirname,
-// },
-// publicRuntimeConfig: {
-//     EnableLogging: true,
-// }
-// }
+const { withSentryConfig } = require('@sentry/nextjs');
 
-if (typeof require !== "undefined") {
-    // eslint-disable-next-line no-unused-vars
-    require.extensions[".less"] = file => { };
-}
+const moduleExports = {
+  // Your existing module.exports
+  env: {
+    mapBoxApi: "",
+    backend: "/",
+    APPNAME: "boiler next js",
+    APPKEY: "sukasukawajaappkeynyaaapaanygpentingsusahdihackdotnet",
+  }
+};
 
-const withLess = require("@zeit/next-less"),
-    nextConfig = {
-        target: "serverless",
-        images: {
-            domains: ['avatars1.githubusercontent.com', 'hellocdkstack-nextjsboilerb3735f9c-1hcfw1w0txr1g.s3.ap-southeast-1.amazonaws.com'],
-        },
-        serverRuntimeConfig: {
-            PROJECT_ROOT: __dirname,
-        },
-        publicRuntimeConfig: {
-            EnableLogging: true,
-        },
-        onDemandEntries: {
-            maxInactiveAge: 1000 * 60 * 60,
-            pagesBufferLength: 5
-        },
-        lessLoaderOptions: {
-            javascriptEnabled: true
-        },
-        webpack: (config, { isServer }) => {
-            if (!isServer) {
-                config.node = {
-                    fs: 'empty'
-                }
-            }
+// If you want to use Sentry, you can use this config
+// dont forget to add the Sentry DSN to your .env file
+// const SentryWebpackPluginOptions = {
+//   silent: true, // Suppresses all logs
+//   tracesSampleRate: 0.6, // Set to 1.0 to sample all traces
+// };
 
-            config.module.rules.push(
-                {
-                    test: /\.md$/,
-                    use: "raw-loader",
-                }
-            );
-
-            if (isServer) {
-                const antStyles = /(antd\/.*?\/style).*(?<![.]js)$/;
-                const origExternals = [...config.externals];
-                config.externals = [
-                    (context, request, callback) => {
-                        if (request.match(antStyles)) return callback();
-                        if (typeof origExternals[0] === "function") {
-                            origExternals[0](context, request, callback);
-                        } else {
-                            callback();
-                        }
-                    },
-                    ...(typeof origExternals[0] === "function" ? [] : origExternals)
-                ];
-
-                config.module.rules.unshift({
-                    test: antStyles,
-                    use: "null-loader"
-                });
-            }
-            return config;
-        }
-    };
-
-module.exports = withLess(nextConfig);
+// module.exports = withSentryConfig(moduleExports, SentryWebpackPluginOptions);
+module.exports = moduleExports;

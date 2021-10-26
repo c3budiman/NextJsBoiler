@@ -1,5 +1,7 @@
 {
-  "presets": ["next/babel"],
+  "presets": [
+    "next/babel"
+  ],
   "plugins": [
     [
       "babel-plugin-styled-components",
@@ -9,6 +11,8 @@
         "preprocess": false
       }
     ],
-    ["import", { "libraryName": "antd" }, "ant"]
+    [
+      "import", { "libraryName": "antd" }, "ant"
+    ]
   ]
 }

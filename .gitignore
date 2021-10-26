@@ -1,8 +1,12 @@
-.env
-node_modules
-.cdk.staging
-cdk.out
-.next
-.env.local
+node_modules/
 .DS_Store
-logs
+*.log
+haters/
+.next/
+.build/
+layout.md
+variables.env
+.vercel
+
+# Sentry
+.sentryclirc

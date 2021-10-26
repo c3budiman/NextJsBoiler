@@ -45,24 +45,5 @@
     "prefix": "colWhite",
     "body": ["#fff;"],
     "description": "Color White"
-  },
-  "ConstPage": {
-    "scope": "jsx",
-    "prefix": "<ConstPage",
-    "body": [
-      "import { useEffect, useState } from \"react\";",
-      "",
-      "",
-      "const ${NewPage}${1} = () => {",
-      "",
-      "\treturn (",
-      "\t\t<>",
-      "\t\t\t ${2}",
-      "\t\t</>",
-      "\t)",
-      "}",
-      "export default ${NewPage}${1};"
-    ],
-    "description": "builder for hook component"
   }
 }

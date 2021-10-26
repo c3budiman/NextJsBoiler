@@ -1,0 +1,35 @@
+.ant-input {
+    border-radius: 20px !important;
+}
+
+.headerPageTabular {
+    color: #A5A5A5;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 27px;
+    cursor: pointer;
+    margin: 0;
+}
+
+div.tabular-i.active>.headerPageTabular {
+    color: #33539E;
+    padding-bottom: 10px;
+    border-bottom: solid 2px #33539E;
+}
+
+.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    border-radius: 20px !important;
+}
+
+.dropdownFilterPrimary {
+    background: #33539E;
+    border: 1px solid #33539E;
+    box-sizing: border-box;
+    border-radius: 20px;
+    padding: 3px 20px;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
