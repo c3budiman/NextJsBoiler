@@ -55,7 +55,7 @@
   },
   "devDependencies": {
     "@zeit/next-less": "1.0.1",
-    "aws-cdk": "1.71.0",
+    "aws-cdk": "1.174.0",
     "babel-plugin-import": "1.13.3",
     "babel-plugin-styled-components": "^1.12.0",
     "eslint": "^7.11.0",
